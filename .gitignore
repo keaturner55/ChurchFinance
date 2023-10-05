@@ -2,5 +2,5 @@
 *.ipynb_checkpoints
 resources/
 *.png
-src/config/credential.yaml
-src/db
+*credential.yaml
+*.db
