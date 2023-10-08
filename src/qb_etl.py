@@ -1,4 +1,4 @@
-import os
+import os, sys
 from intuitlib.client import AuthClient
 from quickbooks import QuickBooks
 from quickbooks.objects.account import Account
@@ -11,10 +11,7 @@ import sqlite3
 from pathlib import Path
 
 
-ROOT_DIR = Path(__file__).parents[2]
-
-
-# In[4]:
+SRC_DIR = Path(__file__).parents[0]
 
 
 def get_auth_client(client_id, client_secret, refresh_token, company_id):
@@ -31,9 +28,6 @@ def get_auth_client(client_id, client_secret, refresh_token, company_id):
             company_id=company_id,
         )
     return client
-
-
-# In[5]:
 
 
 def proc_rows(rows:list, category:str = "", level:int=0):
@@ -56,9 +50,6 @@ def proc_rows(rows:list, category:str = "", level:int=0):
     return row_list
 
 
-# In[6]:
-
-
 def load_yaml(yaml_file:str):
     with open(yaml_file, "r") as stream:
         try:
@@ -68,55 +59,33 @@ def load_yaml(yaml_file:str):
             sys.exit(1)
 
 
-# In[7]:
+credentials = load_yaml(os.path.join(SRC_DIR,"config","credential.yaml"))
 
+if __name__=="__main__":
+    year = 2023
+    print("Generating auth client")
+    client = get_auth_client(credentials['client_id'],credentials['client_secret'],
+                             credentials['refresh_token'],credentials['company_id'])
+    df_list = []
+    for month in range(1,13):
+        days = calendar.monthrange(year,month)[1]
+        month_name = calendar.month_name[month]
+        print(f"Grabbing report details for {month_name}")
+        json_resp = client.get_report("ProfitAndLossDetail", {"start_date":f"{year}-{month}-01", "end_date":f"{year}-{month}-{days}"})
+        cols = [i["ColTitle"] for i in json_resp['Columns']['Column']]
+        report_info = json_resp['Header']
+        if "Row" not in json_resp["Rows"]:
+            print("No data for this month...skipping")
+            continue
+        row_list = proc_rows(json_resp["Rows"]["Row"][0]['Rows']['Row'])
+        df_list.append(pd.DataFrame(row_list))
 
-credentials = load_yaml(os.path.join(SCRIPT_DIR,"config","credential.yaml"))
-
-
-# In[8]:
-
-
-year = 2023
-client = get_auth_client(credentials['client_id'],credentials['client_secret'],
-                         credentials['refresh_token'],credentials['company_id'])
-df_list = []
-for month in range(1,13):
-    days = calendar.monthrange(year,month)[1]
-    month_name = calendar.month_name[month]
-    print(f"Grabbing report details for {month_name}")
-    json_resp = client.get_report("ProfitAndLossDetail", {"start_date":f"{year}-{month}-01", "end_date":f"{year}-{month}-{days}"})
-    cols = [i["ColTitle"] for i in json_resp['Columns']['Column']]
-    report_info = json_resp['Header']
-    if "Row" not in json_resp["Rows"]:
-        print("No data for this month...skipping")
-        continue
-    row_list = proc_rows(json_resp["Rows"]["Row"][0]['Rows']['Row'])
-    df_list.append(pd.DataFrame(row_list))
-
-
-# In[10]:
-
-
-qbdf = pd.concat(df_list)
-conn = sqlite3.connect("quickbooks_db")
-qbdf.to_sql('categorized_items', conn, if_exists='replace', index=False)
-
-
-# In[12]:
-
-
-df = pd.read_sql("select * from categorized_items", conn)
-
-
-# In[13]:
-
-
-df
-
-
-# In[ ]:
-
+    qbdf = pd.concat(df_list)
+    dbname = "quickbooks.db"
+    dbpath = os.path.join(SRC_DIR,"db",dbname)
+    conn = sqlite3.connect(dbpath) 
+    print(f"Saving results to sqlite DB: {dbpath}")
+    qbdf.to_sql('categorized_items', conn, if_exists='replace', index=False)
 
 
 
