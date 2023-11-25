@@ -1,14 +1,15 @@
 import os, sys
 from intuitlib.client import AuthClient
 from quickbooks import QuickBooks
-from quickbooks.objects.account import Account
 import pandas as pd
-import numpy as np
 import calendar
-from dateutil import parser
 import yaml
 import sqlite3
 from pathlib import Path
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
 SRC_DIR = Path(__file__).parents[0]
@@ -55,6 +56,7 @@ def load_yaml(yaml_file:str):
         try:
             return yaml.safe_load(stream)
         except yaml.YAMLError as exc:
+            logger.error()
             print(exc)
             sys.exit(1)
 
