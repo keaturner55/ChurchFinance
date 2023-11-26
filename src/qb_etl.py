@@ -50,6 +50,14 @@ def proc_rows(rows:list, category:str = "", level:int=0):
                 row_list.append(cur_row)
     return row_list
 
+def pre_proc_df(qbdf):
+    # preprocessing/data manipulation
+    qbdf['item'] = qbdf['category'].apply(lambda x: x.split(':')[-1])
+    qbdf['Amount'] = qbdf['Amount'].astype(float)
+    qbdf['Account_Type'] = qbdf['category'].apply(lambda x: x.split(':')[0])
+    return qbdf
+
+
 
 def load_yaml(yaml_file:str):
     with open(yaml_file, "r") as stream:
@@ -83,6 +91,7 @@ if __name__=="__main__":
         df_list.append(pd.DataFrame(row_list))
 
     qbdf = pd.concat(df_list)
+    qbdf = pre_proc_df(qbdf)
     dbname = "quickbooks.db"
     dbpath = os.path.join(SRC_DIR,"db",dbname)
     conn = sqlite3.connect(dbpath) 
