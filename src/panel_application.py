@@ -76,28 +76,30 @@ def generate_month_plot(year, month, qbdf, budgetdf):
         return pn.pane.Markdown("**No Data**")
     
     expenses = qbdf.loc[qbdf['Account_Type']=="Expenses"]
-    income = qbdf.loc[qbdf['Account_Type']=="Income"]
     
     subcategory_totals = merge_budget_expenses(budgetdf, expenses)
+    print(len(subcategory_totals))
     
     budget_bar = subcategory_totals.hvplot.bar(x='Subcategory',
                                            y=['Budget','Amount'],
                                           ylabel="Expenses",
-                                          rot=90,
+                                          rot=45,
                                           title = month_name,
-                                          width = 800,
+                                          width = 750,
                                           height = 550,
                                           legend="top_right").opts(multi_level=False,
-                                                                  
                                                                   fontsize={
                                                                     'title': 15, 
                                                                     'labels': 14, 
                                                                     'xticks': 10, 
                                                                     'yticks': 10})
+    expense_df = expenses[['Date','Amount','item','Memo/Description']]
+    expense_table = pn.widgets.Tabulator(expense_df, height=500, width=500,
+                                         sizing_mode='stretch_width',
+                                         show_index=False, theme='bootstrap')
+
     
-    table_widget = pn.widgets.Tabulator(subcategory_totals)
-    
-    return budget_bar
+    return pn.Row(budget_bar, expense_table)
 
 
 def render_month_pane(element_list):
@@ -131,11 +133,10 @@ def main():
                                                "Septempter":9,"October":10,"November":11,
                                                "December":12}
                                       )
-    init_plot = pn.bind(generate_month_plot,2023,month_options, qbdf, budgetdf)
+    budget_row = pn.bind(generate_month_plot,2023,month_options, qbdf, budgetdf)
     #init_table = pn.bind()
-    row = pn.Row(init_plot)
     template = pn.template.FastListTemplate(title = "Budget Reports",
-                                            main = [month_options,row])
+                                            main = [month_options,budget_row])
     template.servable(target='main')
 
 
