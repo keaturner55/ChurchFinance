@@ -72,7 +72,7 @@ def load_yaml(yaml_file:str):
 credentials = load_yaml(os.path.join(SRC_DIR,"config","credential.yaml"))
 
 if __name__=="__main__":
-    year = 2023
+    year = 2024
     print("Generating auth client")
     client = get_auth_client(credentials['client_id'],credentials['client_secret'],
                              credentials['refresh_token'],credentials['company_id'])

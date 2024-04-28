@@ -6,15 +6,17 @@
 
 import panel as pn
 pn.extension('tabulator')
-import hvplot.pandas
+import plotly.express as px
 import pandas as pd
 import sqlite3
 import os
 from pathlib import Path
 import calendar
 from dateutil import parser
+import hvplot.pandas
 
 SRC_DIR = Path(__file__).parent
+
 
 
 def get_db_data(db_file):
@@ -58,10 +60,8 @@ def check_fields(qbdf,budgetdf):
         if item not in budget_items:
             print(f"Warning: {item} not in any budget category.. consider\
                   generating specific report.")
-            
 
-def generate_month_plot(year, month, qbdf, budgetdf):
-    
+def get_month_data(year, month, qbdf, budgetdf):
     month_name = calendar.month_name[month]
     days = calendar.monthrange(year,month)[1]
     print(f"Generating plot for {month_name}")
@@ -69,16 +69,21 @@ def generate_month_plot(year, month, qbdf, budgetdf):
     interval_dates = (parser.parse(interval[0]),parser.parse(interval[1]))
     
     # trim all dataframes
-    qbdf = qbdf.loc[(qbdf['Date']>=interval_dates[0]) &
+    month_df = qbdf.loc[(qbdf['Date']>=interval_dates[0]) &
                   (qbdf['Date']<=interval_dates[1])]
     
-    if len(qbdf)==0:
+    return month_df
+
+def generate_month_report(year, month, qbdf, budgetdf):
+    
+    month_df = get_month_data(year, month, qbdf, budgetdf)
+    month_name = calendar.month_name[month]
+    if len(month_df)==0:
         return pn.pane.Markdown("**No Data**")
     
-    expenses = qbdf.loc[qbdf['Account_Type']=="Expenses"]
+    expenses = month_df.loc[month_df['Account_Type']=="Expenses"]
     
     subcategory_totals = merge_budget_expenses(budgetdf, expenses)
-    print(len(subcategory_totals))
     
     budget_bar = subcategory_totals.hvplot.bar(x='Subcategory',
                                            y=['Budget','Amount'],
@@ -97,8 +102,8 @@ def generate_month_plot(year, month, qbdf, budgetdf):
     expense_table = pn.widgets.Tabulator(expense_df, height=500, width=500,
                                          sizing_mode='stretch_width',
                                          show_index=False, theme='bootstrap')
-
     
+    #view_row
     return pn.Row(budget_bar, expense_table)
 
 
@@ -133,9 +138,9 @@ def main():
                                                "Septempter":9,"October":10,"November":11,
                                                "December":12}
                                       )
-    budget_row = pn.bind(generate_month_plot,2023,month_options, qbdf, budgetdf)
+    budget_row = pn.bind(generate_month_report,2024,month_options, qbdf, budgetdf)
     #init_table = pn.bind()
-    template = pn.template.FastListTemplate(title = "Budget Reports",
+    template = pn.template.VanillaTemplate(title = "Budget Reports",
                                             main = [month_options,budget_row])
     template.servable(target='main')
 
