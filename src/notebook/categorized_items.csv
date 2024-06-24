@@ -43,8 +43,8 @@
 41,2024-02-09,Deposit,,,"Tithe.ly  : Tithe.ly   : 1800948 ACH, Deposit, Processed",1002 ENT Checking (Keystone),100.0,914.10,Income:Tithe:General Tithe,3,General Tithe,Income
 42,2024-02-13,Deposit,,,"Tithe.ly  : Tithe.ly   : 1800948 ACH, Deposit, Processed",1002 ENT Checking (Keystone),50.0,964.10,Income:Tithe:General Tithe,3,General Tithe,Income
 43,2024-02-18,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),220.0,1184.10,Income:Tithe:General Tithe,3,General Tithe,Income
-44,2024-02-20,Deposit,,,"Deposit   Bulk Checks         33 Deposit, Processed",1002 ENT Checking (Keystone),344.06,1528.16,Income:Tithe:General Tithe,3,General Tithe,Income
-45,2024-02-20,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),254.1,1782.26,Income:Tithe:General Tithe,3,General Tithe,Income
+44,2024-02-20,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),254.1,1438.20,Income:Tithe:General Tithe,3,General Tithe,Income
+45,2024-02-20,Deposit,,,"Deposit   Bulk Checks         33 Deposit, Processed",1002 ENT Checking (Keystone),344.06,1782.26,Income:Tithe:General Tithe,3,General Tithe,Income
 46,2024-02-21,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),535.2,2317.46,Income:Tithe:General Tithe,3,General Tithe,Income
 47,2024-02-22,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),243.9,2561.36,Income:Tithe:General Tithe,3,General Tithe,Income
 48,2024-02-27,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),10.0,2571.36,Income:Tithe:General Tithe,3,General Tithe,Income
@@ -64,8 +64,8 @@
 62,2024-02-28,Expense,,Planning Center Ca,"PLANNINGCENTERBILL.COM PLANNINGC BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),48.0,128.85,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
 63,2024-02-06,Expense,,Amazon,"Visa Check  AMZN Mktp US*RB1798G DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),9.92,9.92,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 64,2024-02-15,Expense,,,"Visa Check  ZAPATA 2 LLC COLORAD DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),42.99,52.91,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
-65,2024-02-22,Expense,,Amazon,"Visa Check  AMZN Mktp US*RW49H3Y DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.42,72.33,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
-66,2024-02-22,Expense,,Amazon,"Visa Check  AMZN Mktp US*RW9GF5R DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),24.07,96.40,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
+65,2024-02-22,Expense,,Amazon,"Visa Check  AMZN Mktp US*RW9GF5R DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),24.07,76.98,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
+66,2024-02-22,Expense,,Amazon,"Visa Check  AMZN Mktp US*RW49H3Y DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.42,96.40,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 67,2024-02-24,Expense,,Wal-Mart,"WAL-MART #3582 1575 SPACE CENTER POS, Withdrawal, Processed",1002 ENT Checking (Keystone),36.41,132.81,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 68,2024-02-04,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
 69,2024-02-11,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,600.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
@@ -81,8 +81,8 @@
 79,2024-03-17,Deposit,,Larry Metzler,metzler direct deposit,1002 ENT Checking (Keystone),220.0,1609.10,Income:Tithe:General Tithe,3,General Tithe,Income
 80,2024-03-19,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),739.3,2348.40,Income:Tithe:General Tithe,3,General Tithe,Income
 81,2024-03-20,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),243.9,2592.30,Income:Tithe:General Tithe,3,General Tithe,Income
-82,2024-03-23,Deposit,,,Manual Tithe,1002 ENT Checking (Keystone),339.19,2931.49,Income:Tithe:General Tithe,3,General Tithe,Income
-83,2024-03-23,Deposit,,,Manual tithe,1002 ENT Checking (Keystone),300.0,3231.49,Income:Tithe:General Tithe,3,General Tithe,Income
+82,2024-03-23,Deposit,,,Manual tithe,1002 ENT Checking (Keystone),300.0,2892.30,Income:Tithe:General Tithe,3,General Tithe,Income
+83,2024-03-23,Deposit,,,Manual Tithe,1002 ENT Checking (Keystone),339.19,3231.49,Income:Tithe:General Tithe,3,General Tithe,Income
 84,2024-03-25,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),50.0,3281.49,Income:Tithe:General Tithe,3,General Tithe,Income
 85,2024-03-31,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),210.0,3491.49,Income:Tithe:General Tithe,3,General Tithe,Income
 86,2024-03-04,Expense,,CenturyLink,"CENTURYLINK LUMEN 800-244-1111 L BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),81.23,81.23,Expenses:Facilities:Building/Office:Communications,4,Communications,Expenses
@@ -90,8 +90,8 @@
 88,2024-03-22,Check,344,Nature's Finest LLC,Snow plow bill,1002 ENT Checking (Keystone),400.0,400.00,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
 89,2024-03-27,Expense,,Colo,"Colo Spgs Utilit  : PAYMENT   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),309.69,309.69,Expenses:Facilities:Government/Professional Fees:Utilities,4,Utilities,Expenses
 90,2024-03-01,Expense,,Google,"Visa Check  GOOGLE GSUITE_mykeys DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),18.55,18.55,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-91,2024-03-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,30.44,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-92,2024-03-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,50.39,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+91,2024-03-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,38.50,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+92,2024-03-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,50.39,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
 93,2024-03-18,Expense,,,"Visa Check  GOOGLE *YouTubePremi DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.14,65.53,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
 94,2024-03-22,Expense,,,"Visa Check  CONVERTKIT EMAIL HTT DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.46,80.99,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
 95,2024-03-28,Expense,,Planning Center Ca,"PLANNINGCENTERBILL.COM PLANNINGC BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),48.0,128.99,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
@@ -99,8 +99,8 @@
 97,2024-03-18,Expense,,,Jan-Feb Charitable Contribution to Joel,1002 ENT Checking (Keystone),186.0,186.00,Expenses:Giving:Charitable Contributions:Joel Frees,4,Joel Frees,Expenses
 98,2024-03-15,Expense,,Life Network,Jan-Feb charitable contribution,1002 ENT Checking (Keystone),186.0,186.00,Expenses:Giving:Charitable Contributions:Life Network,4,Life Network,Expenses
 99,2024-03-05,Expense,,Amazon,"#000000K80J3T  AMAZON.COM SEATTL POS, Withdrawal, Processed",1002 ENT Checking (Keystone),32.72,32.72,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
-100,2024-03-07,Expense,,Panera Bread,"Visa Check  PANERA BREAD #202434 DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),20.91,53.63,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
-101,2024-03-07,Expense,,Amazon,"Visa Check  AMZN Mktp US*R64ZQ7L DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),31.48,85.11,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
+100,2024-03-07,Expense,,Amazon,"Visa Check  AMZN Mktp US*R64ZQ7L DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),31.48,64.20,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
+101,2024-03-07,Expense,,Panera Bread,"Visa Check  PANERA BREAD #202434 DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),20.91,85.11,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 102,2024-03-09,Expense,,,"Visa Check  TST* MANNA NEW RESTA DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.35,100.46,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 103,2024-03-11,Expense,,Texas Roadhouse,"Visa Check  TEXAS ROADHOUSE #204 DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),153.92,254.38,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
 104,2024-03-12,Expense,,Amazon,"Visa Check  AMZN Mktp US*R623L9N DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),124.42,378.80,Expenses:Ministry:Individual Ministries:Worship Expenses,4,Worship Expenses,Expenses
@@ -123,9 +123,9 @@
 121,2024-03-24,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,1200.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
 122,2024-03-31,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,1500.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
 123,2024-04-02,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),50.0,50.00,Income:Tithe:General Tithe,3,General Tithe,Income
-124,2024-04-03,Deposit,,,Lori Katz (Sopp) check,1002 ENT Checking (Keystone),252.75,302.75,Income:Tithe:General Tithe,3,General Tithe,Income
-125,2024-04-03,Deposit,,,Scott Miller check,1002 ENT Checking (Keystone),1000.0,1302.75,Income:Tithe:General Tithe,3,General Tithe,Income
-126,2024-04-03,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),429.1,1731.85,Income:Tithe:General Tithe,3,General Tithe,Income
+124,2024-04-03,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),429.1,479.10,Income:Tithe:General Tithe,3,General Tithe,Income
+125,2024-04-03,Deposit,,,Scott Miller check,1002 ENT Checking (Keystone),1000.0,1479.10,Income:Tithe:General Tithe,3,General Tithe,Income
+126,2024-04-03,Deposit,,,Lori Katz (Sopp) check,1002 ENT Checking (Keystone),252.75,1731.85,Income:Tithe:General Tithe,3,General Tithe,Income
 127,2024-04-04,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),200.0,1931.85,Income:Tithe:General Tithe,3,General Tithe,Income
 128,2024-04-07,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),260.0,2191.85,Income:Tithe:General Tithe,3,General Tithe,Income
 129,2024-04-10,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),1623.2,3815.05,Income:Tithe:General Tithe,3,General Tithe,Income
@@ -136,18 +136,98 @@
 134,2024-04-20,Deposit,,,"Deposit   Bulk Checks         15 Deposit, Processed",1002 ENT Checking (Keystone),163.0,4696.05,Income:Tithe:General Tithe,3,General Tithe,Income
 135,2024-04-22,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),300.0,4996.05,Income:Tithe:General Tithe,3,General Tithe,Income
 136,2024-04-24,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),231.0,5227.05,Income:Tithe:General Tithe,3,General Tithe,Income
-137,2024-04-01,Expense,,CenturyLink,"CENTURYLINK LUMEN 800-244-1111 L BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),81.23,81.23,Expenses:Facilities:Building/Office:Communications,4,Communications,Expenses
-138,2024-04-08,Check,374,McCarthy Plumbing,Sump pump check,1002 ENT Checking (Keystone),80.0,80.00,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
-139,2024-04-23,Expense,,,"PNP BILLPAYMENT  : 042124EK   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),24.05,24.05,Expenses:Facilities:Government/Professional Fees:City Watershed Fees,4,City Watershed Fees,Expenses
-140,2024-04-01,Expense,,Nooks + Crannies Cleaning Co,"Visa Check  VENMO *Alyssa Markle DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Facilities:Government/Professional Fees:Cleaning Service,4,Cleaning Service,Expenses
-141,2024-04-26,Expense,,Colorado Secretary of State,Dissolve Gethsemane Nonprofit,1002 ENT Checking (Keystone),10.0,10.00,Expenses:Facilities:Government/Professional Fees:Incorporation Fees,4,Incorporation Fees,Expenses
-142,2024-04-05,Expense,,,Gutter Cleaning,1002 ENT Checking (Keystone),94.04,94.04,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
-143,2024-04-06,Expense,,,Flower beds,1002 ENT Checking (Keystone),283.08,377.12,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
-144,2024-04-26,Expense,,Colo,"Colo Spgs Utilit  : PAYMENT   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),306.25,306.25,Expenses:Facilities:Government/Professional Fees:Utilities,4,Utilities,Expenses
-145,2024-04-01,Expense,,Google,"Visa Check  GOOGLE*GSUITE MYKEYS DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.86,19.86,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-146,2024-04-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,39.81,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-147,2024-04-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,51.70,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-148,2024-04-18,Expense,,,"Visa Check  GOOGLE *YouTubePremi DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.14,66.84,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-149,2024-04-22,Expense,,,"Visa Check  CONVERTKIT EMAIL HTT DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.46,82.30,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
-150,2024-04-07,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
-151,2024-04-21,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,600.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+137,2024-04-28,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),210.0,5437.05,Income:Tithe:General Tithe,3,General Tithe,Income
+138,2024-04-30,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),100.0,5537.05,Income:Tithe:General Tithe,3,General Tithe,Income
+139,2024-04-30,Deposit,,,"Deposit Dividend 0.050% APY Earn Dividend, Deposit, Processed",ENT Savings (Keystone),0.18,5537.23,Income:Tithe:General Tithe,3,General Tithe,Income
+140,2024-04-01,Expense,,CenturyLink,"CENTURYLINK LUMEN 800-244-1111 L BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),81.23,81.23,Expenses:Facilities:Building/Office:Communications,4,Communications,Expenses
+141,2024-04-30,Expense,,CenturyLink,"CENTURYLINK LUMEN 800-244-1111 L BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),81.23,162.46,Expenses:Facilities:Building/Office:Communications,4,Communications,Expenses
+142,2024-04-08,Check,374,McCarthy Plumbing,Sump pump check,1002 ENT Checking (Keystone),80.0,80.00,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+143,2024-04-23,Expense,,,"PNP BILLPAYMENT  : 042124EK   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),24.05,24.05,Expenses:Facilities:Government/Professional Fees:City Watershed Fees,4,City Watershed Fees,Expenses
+144,2024-04-01,Expense,,Nooks + Crannies Cleaning Co,"Visa Check  VENMO *Alyssa Markle DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Facilities:Government/Professional Fees:Cleaning Service,4,Cleaning Service,Expenses
+145,2024-04-26,Expense,,Colorado Secretary of State,Dissolve Gethsemane Nonprofit,1002 ENT Checking (Keystone),10.0,10.00,Expenses:Facilities:Government/Professional Fees:Incorporation Fees,4,Incorporation Fees,Expenses
+146,2024-04-05,Expense,,,Gutter Cleaning,1002 ENT Checking (Keystone),94.04,94.04,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+147,2024-04-06,Expense,,,Flower beds,1002 ENT Checking (Keystone),283.08,377.12,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+148,2024-04-29,Check,376,Nature's Finest LLC,Snow plow 3/14,1002 ENT Checking (Keystone),490.0,867.12,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+149,2024-04-26,Expense,,Colo,"Colo Spgs Utilit  : PAYMENT   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),306.25,306.25,Expenses:Facilities:Government/Professional Fees:Utilities,4,Utilities,Expenses
+150,2024-04-01,Expense,,Google,"Visa Check  GOOGLE*GSUITE MYKEYS DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.86,19.86,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+151,2024-04-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,31.75,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+152,2024-04-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,51.70,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+153,2024-04-18,Expense,,,"Visa Check  GOOGLE *YouTubePremi DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.14,66.84,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+154,2024-04-22,Expense,,,"Visa Check  CONVERTKIT EMAIL HTT DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.46,82.30,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+155,2024-04-28,Expense,,Planning Center Ca,"PLANNINGCENTERBILL.COM PLANNINGC BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),48.0,130.30,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+156,2024-04-09,Expense,,,"Visa Check  BRIDGEWAY CHURCH WWW DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),20.0,20.00,Expenses:Giving:Charitable Contributions:Benevolence,4,Benevolence,Expenses
+157,2024-04-12,Expense,,Mission Coffee Roast,"SQ *THIRD SPACE COFFEE SQUARE PU POS, Withdrawal, Processed",1002 ENT Checking (Keystone),12.01,12.01,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+158,2024-04-23,Expense,,Mission Coffee Roast,"SQ *THIRD SPACE COFFEE SQUARE PU POS, Withdrawal, Processed",1002 ENT Checking (Keystone),7.22,19.23,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+159,2024-04-30,Expense,,Mission Coffee Roast,"Visa Check  SQ *THIRD SPACE COFF DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),13.7,32.93,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+160,2024-04-07,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+161,2024-04-21,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,600.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+162,2024-04-28,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,900.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+163,2024-05-31,Deposit,,,"Deposit Dividend 0.050% APY Earn Dividend, Deposit, Processed",ENT Savings (Keystone),0.19,.19,Income:Interest Earned,2,Interest Earned,Income
+164,2024-05-03,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),429.1,429.10,Income:Tithe:General Tithe,3,General Tithe,Income
+165,2024-05-05,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),260.0,689.10,Income:Tithe:General Tithe,3,General Tithe,Income
+166,2024-05-12,Deposit,,Larry Metzler,Metzler direct deposit,1002 ENT Checking (Keystone),220.0,909.10,Income:Tithe:General Tithe,3,General Tithe,Income
+167,2024-05-13,Deposit,,,"Deposit   Bulk Checks         13 Deposit, Processed",1002 ENT Checking (Keystone),130.0,1039.10,Income:Tithe:General Tithe,3,General Tithe,Income
+168,2024-05-14,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),50.0,1089.10,Income:Tithe:General Tithe,3,General Tithe,Income
+169,2024-05-15,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),300.0,1389.10,Income:Tithe:General Tithe,3,General Tithe,Income
+170,2024-05-17,Deposit,,,"Deposit   Bulk Loose Currency Deposit, Processed",1002 ENT Checking (Keystone),330.0,1719.10,Income:Tithe:General Tithe,3,General Tithe,Income
+171,2024-05-17,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),254.1,1973.20,Income:Tithe:General Tithe,3,General Tithe,Income
+172,2024-05-22,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),679.1,2652.30,Income:Tithe:General Tithe,3,General Tithe,Income
+173,2024-05-26,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),210.0,2862.30,Income:Tithe:General Tithe,3,General Tithe,Income
+174,2024-05-29,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),98.25,2960.55,Income:Tithe:General Tithe,3,General Tithe,Income
+175,2024-05-31,Deposit,,,"Deposit   Bulk Checks         30 Deposit, Processed",1002 ENT Checking (Keystone),310.68,3271.23,Income:Tithe:General Tithe,3,General Tithe,Income
+176,2024-05-08,Expense,,Guide One,"GuideOne  : PAYMENT   : F8001467 ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),1118.0,1118.00,Expenses:Facilities:Building/Office:Church Insurance,4,Church Insurance,Expenses
+177,2024-05-06,Expense,,Amazon,"Visa Check  AMZN Mktp US*9L5U46D DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),125.62,125.62,Expenses:Facilities:Building/Office:Office Supplies,4,Office Supplies,Expenses
+178,2024-05-02,Expense,,,Sprinkler service. Wirenut,1002 ENT Checking (Keystone),794.2,794.20,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+179,2024-05-03,Check,375,McCarthy Plumbing,Sewer line flush,1002 ENT Checking (Keystone),100.0,894.20,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+180,2024-05-10,Expense,,Lowe's,"LOWE'S #1099 COLORADO SPGS C POS, Withdrawal, Processed",1002 ENT Checking (Keystone),109.69,1003.89,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+181,2024-05-15,Expense,,,"Visa Check  CIRCLE ACE HARDWARE DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),116.79,1120.68,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+182,2024-05-17,Expense,,,Window well covers (reimbursed),1002 ENT Checking (Keystone),36.77,1157.45,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+183,2024-05-02,Expense,,,"SOCO WASTE  : EFT   : XXXXXX3620 ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),113.85,113.85,Expenses:Facilities:Building/Office:Trash,4,Trash,Expenses
+184,2024-05-14,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),56.99,56.99,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+185,2024-05-21,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),62.39,119.38,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+186,2024-05-28,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),56.99,176.37,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+187,2024-05-28,Expense,,Colo,"Colo Spgs Utilit  : PAYMENT   : ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),305.42,305.42,Expenses:Facilities:Government/Professional Fees:Utilities,4,Utilities,Expenses
+188,2024-05-01,Expense,,Google,"GOOGLE GSUITE_mykeysto 650-25300 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),22.26,22.26,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+189,2024-05-15,Expense,,,"Visa Check  RIGHTNOW M* RIGHTNOW DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),29.99,52.25,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+190,2024-05-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,64.14,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+191,2024-05-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,84.09,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+192,2024-05-18,Expense,,,"Visa Check  GOOGLE *YouTubePremi DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.14,99.23,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+193,2024-05-22,Expense,,,"Visa Check  CONVERTKIT EMAIL HTT DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.46,114.69,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+194,2024-05-28,Expense,,Planning Center Ca,"PLANNINGCENTERBILL.COM PLANNINGC BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),48.0,162.69,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+195,2024-05-26,Expense,,,"Visa Check  CROSSFIRE MINISTRIES DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Giving:Charitable Contributions:Crossfire,4,Crossfire,Expenses
+196,2024-05-28,Expense,,,"PAYPAL  : INST XFER   : PAYPALSI ACH, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Giving:Charitable Contributions:Joel Frees,4,Joel Frees,Expenses
+197,2024-05-25,Expense,,Life Network,"LIFE NETWORK HTTPSWWW.ELIF CO Ca BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Giving:Charitable Contributions:Life Network,4,Life Network,Expenses
+198,2024-05-02,Expense,,,"SQ *WAYFINDER COFFEE CO. SQUARE POS, Withdrawal, Processed",1002 ENT Checking (Keystone),10.93,10.93,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+199,2024-05-10,Expense,,,"Visa Check  MCDONALD'S F1700 DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),17.56,28.49,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+200,2024-05-14,Expense,,Mission Coffee Roast,"Visa Check  SQ *THIRD SPACE COFF DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),11.82,40.31,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+201,2024-05-18,Expense,,,"Visa Check  TST* BAD ASS COFFEE DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),16.28,56.59,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+202,2024-05-30,Expense,,,"Visa Check  TST* BAD ASS COFFEE DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),18.1,74.69,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+203,2024-05-05,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+204,2024-05-12,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,600.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+205,2024-05-19,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,900.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+206,2024-05-26,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,1200.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+207,2024-06-05,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),529.1,529.10,Income:Tithe:General Tithe,3,General Tithe,Income
+208,2024-06-14,Deposit,,,"Deposit   Bulk Checks         14 Deposit, Processed",1002 ENT Checking (Keystone),166.24,695.34,Income:Tithe:General Tithe,3,General Tithe,Income
+209,2024-06-16,Deposit,,Larry Metzler,"Deposit Home Banking Transfer RE InternetBanking, Deposit, Processed, Transfer",1002 ENT Checking (Keystone),220.0,915.34,Income:Tithe:General Tithe,3,General Tithe,Income
+210,2024-06-20,Deposit,,,"Tithe.ly  : Tithe.ly   : 4270465 ACH, Deposit, Processed",1002 ENT Checking (Keystone),254.1,1169.44,Income:Tithe:General Tithe,3,General Tithe,Income
+211,2024-06-03,Expense,,CenturyLink,"CENTURYLINK LUMEN 800-244-1111 L BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),81.23,81.23,Expenses:Facilities:Building/Office:Communications,4,Communications,Expenses
+212,2024-06-08,Expense,,Amazon,"Visa Check  AMZN Mktp US*YL3Q75Q DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),89.02,89.02,Expenses:Facilities:Building/Office:Office Supplies,4,Office Supplies,Expenses
+213,2024-06-06,Deposit,,,Window well covers reimbursement,1002 ENT Checking (Keystone),-36.77,-36.77,Expenses:Facilities:Building/Office:Repair and Maintenance,4,Repair and Maintenance,Expenses
+214,2024-06-22,Expense,,Nooks + Crannies Cleaning Co,"Visa Check  VENMO *Alyssa Markle DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Facilities:Government/Professional Fees:Cleaning Service,4,Cleaning Service,Expenses
+215,2024-06-05,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),56.99,56.99,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+216,2024-06-11,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),56.99,113.98,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+217,2024-06-13,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),5.4,119.38,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+218,2024-06-18,Expense,,,"LAWNCARE* LAWN LOVE HTTPSWWW.LAW BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),56.99,176.37,Expenses:Facilities:Government/Professional Fees:Lawn/Snow,4,Lawn/Snow,Expenses
+219,2024-06-01,Expense,,Google,"Visa Check  GOOGLE *GSUITE_mykey DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),22.26,22.26,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+220,2024-06-15,Expense,,Spotify,"SPOTIFY 877-778-1161 NY Card 571 BillPayment, Withdrawal, Processed",1002 ENT Checking (Keystone),11.89,34.15,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+221,2024-06-15,Expense,,The Corporate Thread,"Visa Check  RESTREAM, INC. RESTR DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),19.95,54.10,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+222,2024-06-18,Expense,,,"Visa Check  GOOGLE *YouTubePremi DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.14,69.24,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+223,2024-06-22,Expense,,,"Visa Check  CONVERTKIT EMAIL HTT DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),15.46,84.70,Expenses:Facilities:Software and Subscriptions,3,Software and Subscriptions,Expenses
+224,2024-06-07,Expense,,Amazon,"Visa Check  AMZN Mktp US*EP81H53 DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),18.65,18.65,Expenses:Ministry:Individual Ministries:Children's,4,Children's,Expenses
+225,2024-06-14,Expense,,Hobby Lobby,"Visa Check  HOBBY LOBBY #367 COL DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),10.05,28.70,Expenses:Ministry:Individual Ministries:Children's,4,Children's,Expenses
+226,2024-06-02,Expense,,,"Visa Check  FIRST WATCH - 0322 C DebitCard, Withdrawal, Processed",1002 ENT Checking (Keystone),43.16,43.16,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+227,2024-06-13,Expense,,Mission Coffee Roast,"SQ *THIRD SPACE COFFEE SQUARE PU POS, Withdrawal, Processed",1002 ENT Checking (Keystone),6.41,49.57,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+228,2024-06-18,Expense,,,"SQ *WAYFINDER COFFEE CO. SQUARE POS, Withdrawal, Processed",1002 ENT Checking (Keystone),11.47,61.04,Expenses:Ministry:Individual Ministries:Coffee/Meals,4,Coffee/Meals,Expenses
+229,2024-06-02,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,300.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+230,2024-06-09,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,600.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
+231,2024-06-16,Expense,,David and Catherine Reyes,"Withdrawal Home Banking Transfer InternetBanking, Withdrawal, Processed, Transfer",1002 ENT Checking (Keystone),300.0,900.00,Expenses:Salaries:Lead Pastor,3,Lead Pastor,Expenses
