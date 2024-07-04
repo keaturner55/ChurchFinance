@@ -9,6 +9,8 @@ from pathlib import Path
 import calendar
 from dateutil import parser
 import hvplot.pandas
+from jinja2 import Environment, FileSystemLoader
+
 
 
 SRC_DIR = Path(__file__).parent
@@ -86,6 +88,8 @@ class FinanceDashboard(pn.viewable.Viewer):
     qb_df = param.DataFrame()
     month_df = param.DataFrame()
     budget_df = param.DataFrame()
+    subcategory_totals = param.DataFrame()
+    expenses = param.DataFrame()
 
     view = param.ClassSelector(class_ = pn.Column)
 
@@ -98,29 +102,27 @@ class FinanceDashboard(pn.viewable.Viewer):
         self.init_view()
 
     def init_view(self):
-        self.plot_pane = self.generate_month_report
         self.parameter_pane = pn.Param(self, parameters = ['year', 'month'],
                                        default_layout=pn.Row, show_name=False, margin=(0,0,10,30))
-        self.view = pn.Column(
-                self.parameter_pane,
-                self.plot_pane,
-                sizing_mode='stretch_both',
-            )
-
+        self.generate_month_report()
 
     @pn.depends("year", "month")
     def generate_month_report(self):
     
         self.month_df = get_month_data(self.year, self.month, self.qb_df)
-        month_name = calendar.month_name[self.month]
         if len(self.month_df)==0:
             return pn.pane.Markdown("**No Data**")
         
-        expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
+        self.expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
         
-        subcategory_totals = merge_budget_expenses(self.budget_df, expenses)
-        
-        budget_bar = subcategory_totals.hvplot.bar(x='Subcategory',y=['Budget','Amount'],
+        self.subcategory_totals = merge_budget_expenses(self.budget_df, self.expenses)
+    
+    @pn.depends('subcategory_totals')
+    def gen_bar_plot(self):
+        if self.subcategory_totals is None or len(self.subcategory_totals)==0:
+            return "No Data"
+        month_name = calendar.month_name[self.month]
+        budget_bar = self.subcategory_totals.hvplot.bar(x='Subcategory',y=['Budget','Amount'],
                                             ylabel="Expenses",
                                             rot=60,
                                             title = month_name,
@@ -132,8 +134,13 @@ class FinanceDashboard(pn.viewable.Viewer):
                                                                         'xticks': 12, 
                                                                         'yticks': 10},
                                                                     cmap=[(44,160,44),(31,119,180)])
-        
-        item_totals = expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
+        return budget_bar
+    
+    @pn.depends('expenses')
+    def gen_table(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return "No Data"
+        item_totals = self.expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
         item_totals.columns = ['item','Amount','Transactions']
         item_totals["Transactions"] = item_totals["Transactions"].apply(int)
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
@@ -141,10 +148,7 @@ class FinanceDashboard(pn.viewable.Viewer):
         expense_table = pn.widgets.Tabulator(report_totals, height=500,
                                             layout='fit_data_table',
                                             show_index=False, theme='bootstrap')
-        
-        
-        #view_row
-        return pn.Row(budget_bar,expense_table, sizing_mode='stretch_width')   
+        return expense_table
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
@@ -159,8 +163,16 @@ def main():
     budgetdf = get_budget_data(budget_csv)
 
     check_fields(qbdf, budgetdf)
-    FinanceDashboard(qbdf, budgetdf).view.servable()
+    env = Environment(loader=FileSystemLoader('.'))
+    template = pn.Template(env.get_template('template.html'))
 
+    dashboard = FinanceDashboard(qbdf, budgetdf)
+
+    template.add_variable('app_title','blahblah')
+    template.add_panel('parameters',dashboard.parameter_pane)
+    template.add_panel('barplot',dashboard.gen_bar_plot)
+    template.add_panel('table', dashboard.gen_table)
+    template.servable()
 
 main()
 

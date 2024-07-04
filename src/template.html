@@ -1,0 +1,30 @@
+{% extends base %}
+
+<!-- Addition to head -->
+{% block postamble %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+{% endblock %}
+
+<!-- Addition to body -->
+{% block contents %}
+{{ app_title }}
+<p>This is a Panel app with a custom template allowing us to compose multiple Panel objects into a single HTML document.</p>
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+      {{ embed(roots.parameters)}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        {{ embed(roots.barplot) }}
+      </div>
+      <div class="col-sm">
+        {{ embed(roots.table) }}
+      </div>
+    </div>
+</div>
+{% endblock %}
+"""
+
