@@ -73,12 +73,12 @@ def get_month_data(year, month, qbdf):
     return month_df
 
 
-class FinanceDashboard(pn.viewable.Viewer):
+class FinanceDashboard(param.Parameterized):
     """
     Main render view class for dashboard
     """
     year = param.ObjectSelector(default = 2024, label = "Year Selection", objects = [2023,2024])
-    month = param.ObjectSelector(default = 1, label="Month Selection",
+    month = param.ObjectSelector(default = 2, label="Month Selection",
                                       objects={"January":1,"Februrary":2,"March":3,
                                                "April":4,"May":5,"June":6,"July":7,"August":8,
                                                "Septempter":9,"October":10,"November":11,
@@ -91,42 +91,34 @@ class FinanceDashboard(pn.viewable.Viewer):
     subcategory_totals = param.DataFrame()
     expenses = param.DataFrame()
 
-    view = param.ClassSelector(class_ = pn.Column)
-
-
-    def __init__(self, qb_df, budget_df, **params):
+    def __init__(self, qb_df = None, budget_df = None, **params):
         super().__init__(**params)
 
         self.qb_df = qb_df
         self.budget_df = budget_df
-        self.init_view()
+        self.parameter_pane = pn.Param(self,parameters = ['year', 'month'],
+                                       default_layout=pn.Row, show_name=False)
+        self.month=1
+        
 
-    def init_view(self):
-        self.parameter_pane = pn.Param(self, parameters = ['year', 'month'],
-                                       default_layout=pn.Row, show_name=False, margin=(0,0,10,30))
-        self.generate_month_report()
-
-    @pn.depends("year", "month")
+    @pn.depends("year", "month", watch=True)
     def generate_month_report(self):
+        print("fire... generate month reports")
     
         self.month_df = get_month_data(self.year, self.month, self.qb_df)
-        if len(self.month_df)==0:
-            return pn.pane.Markdown("**No Data**")
-        
         self.expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
-        
         self.subcategory_totals = merge_budget_expenses(self.budget_df, self.expenses)
     
     @pn.depends('subcategory_totals')
     def gen_bar_plot(self):
+        print("fire... gen bar plot")
         if self.subcategory_totals is None or len(self.subcategory_totals)==0:
-            return "No Data"
+            return pn.pane.Markdown("No Data")
         month_name = calendar.month_name[self.month]
         budget_bar = self.subcategory_totals.hvplot.bar(x='Subcategory',y=['Budget','Amount'],
                                             ylabel="Expenses",
                                             rot=60,
                                             title = month_name,
-                                            height = 650,
                                             legend="top_right").opts(multi_level=False,
                                                                     fontsize={
                                                                         'title': 15, 
@@ -145,7 +137,7 @@ class FinanceDashboard(pn.viewable.Viewer):
         item_totals["Transactions"] = item_totals["Transactions"].apply(int)
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
         report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
-        expense_table = pn.widgets.Tabulator(report_totals, height=500,
+        expense_table = pn.widgets.Tabulator(report_totals, fit='stretch_width',
                                             layout='fit_data_table',
                                             show_index=False, theme='bootstrap')
         return expense_table
@@ -167,12 +159,11 @@ def main():
     template = pn.Template(env.get_template('template.html'))
 
     dashboard = FinanceDashboard(qbdf, budgetdf)
-
-    template.add_variable('app_title','blahblah')
     template.add_panel('parameters',dashboard.parameter_pane)
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
     template.servable()
+
 
 main()
 

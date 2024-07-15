@@ -7,24 +7,56 @@
 
 <!-- Addition to body -->
 {% block contents %}
-{{ app_title }}
 <p>This is a Panel app with a custom template allowing us to compose multiple Panel objects into a single HTML document.</p>
 <br>
 <div class="container">
-    <div class="row">
-      <div class="col-sm">
-      {{ embed(roots.parameters)}}
+  <h1>Dashboard</h1>
+  <div class="row">
+    {{ embed(roots.parameters) }}
+  </div>
+  <div class="row">
+      <div class="col-lg-4 col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 1</h5>
+                  <p class="card-text">Content for card 1.</p>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm">
-        {{ embed(roots.barplot) }}
+      <div class="col-lg-4 col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 2</h5>
+                  <p class="card-text">Content for card 2.</p>
+              </div>
+          </div>
       </div>
-      <div class="col-sm">
-        {{ embed(roots.table) }}
+      <div class="col-lg-4 col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 3</h5>
+                  <p class="card-text">Content for card 3.</p>
+              </div>
+          </div>
       </div>
-    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+          <div class="card">
+              <div class="card-body">
+                {{ embed(roots.barplot) }}
+              </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 5</h5>
+                  <p class="card-text">{{ embed(roots.table) }}</p>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 {% endblock %}
-"""
-
