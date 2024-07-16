@@ -1,0 +1,6 @@
+*.pyc
+*.ipynb_checkpoints
+resources/
+*.png
+*credential.yaml
+*.db

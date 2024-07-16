@@ -1,0 +1,59 @@
+{% extends base %}
+
+<!-- Addition to head -->
+{% block postamble %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+{% endblock %}
+
+<!-- Addition to body -->
+{% block contents %}
+<div class="container">
+  <h1>Dashboard</h1>
+  <div class="row">
+    {{ embed(roots.parameters) }}
+  </div>
+  <div class="row">
+      <div class="col-md-4 col-sm-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 1</h5>
+                  <p class="card-text">Content for card 1.</p>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 2</h5>
+                  <p class="card-text">Content for card 2.</p>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Card 3</h5>
+                  <p class="card-text">Content for card 3.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col">
+      <div class="col-md">
+          <div class="card">
+              <div class="card-body">
+                {{ embed(roots.barplot) }}
+              </div>
+          </div>
+      </div>
+      <div class="col-md">
+          <div class="card">
+              <div class="card-body">
+                {{ embed(roots.table) }}
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
