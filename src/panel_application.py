@@ -133,7 +133,8 @@ class FinanceDashboard(param.Parameterized):
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
         report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
         expense_table = pn.widgets.Tabulator(report_totals, height=500,
-                                            show_index=False, theme='bootstrap', sizing_mode='stretch_width')
+                                            show_index=False, theme='bootstrap',
+                                            layout='fit_columns',sizing_mode='stretch_width')
         return expense_table
 
 def main():
