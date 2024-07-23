@@ -90,6 +90,7 @@ class FinanceDashboard(param.Parameterized):
     budget_df = param.DataFrame()
     subcategory_totals = param.DataFrame()
     expenses = param.DataFrame()
+    income = param.DataFrame()
 
     def __init__(self, qb_df = None, budget_df = None, **params):
         super().__init__(**params)
@@ -107,6 +108,7 @@ class FinanceDashboard(param.Parameterized):
     
         self.month_df = get_month_data(self.year, self.month, self.qb_df)
         self.expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
+        self.income = self.month_df.loc[self.month_df['Account_Type']=="Income"]
         self.subcategory_totals = merge_budget_expenses(self.budget_df, self.expenses)
     
     @pn.depends('subcategory_totals')
@@ -137,6 +139,29 @@ class FinanceDashboard(param.Parameterized):
                                             layout='fit_columns',sizing_mode='stretch_width')
         return expense_table
 
+    @pn.depends('expenses')
+    def get_expenses(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.Markdown("##No Data")
+        else:
+            return pn.indicators.Number(value=round(self.expenses['Amount'].sum(),2), format='${value}')
+        
+    @pn.depends('income')
+    def get_income(self):
+        if self.income is None or len(self.income)==0:
+            return pn.pane.Markdown("##No Data")
+        else:
+            return pn.indicators.Number(value=round(self.income['Amount'].sum(),2), format='${value}')
+        
+    @pn.depends('income')
+    def get_net_profit(self):
+        if self.month_df is None or len(self.month_df)==0:
+            return pn.pane.Markdown("##No Data")
+        else:
+            net = self.income['Amount'].sum() - self.expenses['Amount'].sum()
+            return pn.indicators.Number(value=round(net,2), colors = [(0,'red'),(100000,'green')],format='${value}')
+
+
 def main():
     # QB data stored in the DB-comes from qb_etl.py
     dbname = "quickbooks.db"
@@ -155,6 +180,9 @@ def main():
 
     dashboard = FinanceDashboard(qbdf, budgetdf)
     template.add_panel('parameters',dashboard.parameter_pane)
+    template.add_panel('total_expenses',dashboard.get_expenses)
+    template.add_panel('total_income',dashboard.get_income)
+    template.add_panel('net_profit', dashboard.get_net_profit)
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
     template.servable()
