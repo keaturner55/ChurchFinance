@@ -35,11 +35,11 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="navbar">
-                        <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a>
+                    <div class="navbar row">
+                        <div class="col-md-5">
+                            <a href="https://newbeginningscos.com/">New Beginnings Home</a>
+                            <a href="https://quickbooks.com/">Quickbooks</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Date Selection</h5>
+                            <h3 class="card-title">Date Selection</h3>
                             {{ embed(roots.parameters) }}
                         </div>
                     </div>
@@ -56,23 +56,23 @@
                 <div class="col-md-3 col-xs-6">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Total Expenses</h5>
-                            {{ embed(roots.total_expenses) }}
+                            <h3 class="card-title">Total Expenses</h3>
+                                <center>{{ embed(roots.total_expenses) }}</center>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-xs-6">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Total Income</h5>
-                            {{ embed(roots.total_income) }}
+                            <h3 class="card-title">Total Income</h3>
+                                <center>{{ embed(roots.total_income) }}</center>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-xs-6">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Net Profit</h5>
+                            <h3 class="card-title">Net Profit</h3>
                             <center>{{ embed(roots.net_profit) }}</center>
                         </div>
                     </div>
@@ -83,6 +83,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
+                            <h3 class="card-title">Budget Compare</h3>
                             {{ embed(roots.barplot) }}
                         </div>
                     </div>
@@ -90,7 +91,19 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
+                            <h3 class="card-title">Top 10 Expenses</h3>
                             {{ embed(roots.table) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Transactions</h3>
+                            {{ embed(roots.transactions)}}
                         </div>
                     </div>
                 </div>

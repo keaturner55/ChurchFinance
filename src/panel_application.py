@@ -1,16 +1,17 @@
 import panel as pn
 import param
 pn.extension('tabulator')
-import plotly.express as px
 import pandas as pd
 import sqlite3
 import os
 from pathlib import Path
 import calendar
 from dateutil import parser
-import hvplot.pandas
+from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource
 from jinja2 import Environment, FileSystemLoader
-
+import math
+import numpy as np
 
 
 SRC_DIR = Path(__file__).parent
@@ -104,8 +105,6 @@ class FinanceDashboard(param.Parameterized):
 
     @pn.depends("year", "month", watch=True)
     def generate_month_report(self):
-        print("fire... generate month reports")
-    
         self.month_df = get_month_data(self.year, self.month, self.qb_df)
         self.expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
         self.income = self.month_df.loc[self.month_df['Account_Type']=="Income"]
@@ -113,28 +112,31 @@ class FinanceDashboard(param.Parameterized):
     
     @pn.depends('subcategory_totals')
     def gen_bar_plot(self):
-        print("fire... gen bar plot")
         if self.subcategory_totals is None or len(self.subcategory_totals)==0:
             return pn.pane.Markdown("No Data")
         month_name = calendar.month_name[self.month]
-        budget_bar = self.subcategory_totals.hvplot.bar(x='Subcategory',y=['Budget','Amount'],
-                                            ylabel="Expenses",
-                                            rot=60,
-                                            title = month_name,
-                                            legend="top_right").opts(multi_level=False,
-                                                                    cmap=[(44,160,44),(31,119,180)])
-        return pn.pane.HoloViews(budget_bar, height=500, sizing_mode='stretch_width')
+        tempdf = self.subcategory_totals.copy()
+        tempdf["RG"] = np.where((tempdf.Amount > tempdf.Budget), 'red', 'green')
+        source = ColumnDataSource(tempdf)
+        p = figure(x_range=tempdf['Subcategory'],title=month_name, height=500)
+        p.yaxis.axis_label = 'Amount'
+        p.xaxis.major_label_orientation=math.pi/4
+        p.xaxis.major_label_text_font_size = "12pt"
+        p.vbar(x = 'Subcategory', top='Amount', source=source, width=.5, legend_label="Amount", color = 'RG')
+        p.dash(x='Subcategory',y='Budget', source=source, legend_label="Budget", color='black', size=23, line_width=3)
+        return pn.pane.Bokeh(p, height=500, sizing_mode='stretch_width')
     
     @pn.depends('expenses')
     def gen_table(self):
         if self.expenses is None or len(self.expenses)==0:
-            return "No Data"
+            return pn.pane.Markdown("## No Data")
         item_totals = self.expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
         item_totals.columns = ['item','Amount','Transactions']
         item_totals["Transactions"] = item_totals["Transactions"].apply(int)
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
         report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
-        expense_table = pn.widgets.Tabulator(report_totals, height=500,
+        expense_table = pn.widgets.Tabulator(report_totals, height=500, page_size=10,
+                                             pagination='remote',
                                             show_index=False, theme='bootstrap',
                                             layout='fit_columns',sizing_mode='stretch_width')
         return expense_table
@@ -142,39 +144,48 @@ class FinanceDashboard(param.Parameterized):
     @pn.depends('expenses')
     def get_expenses(self):
         if self.expenses is None or len(self.expenses)==0:
-            return pn.pane.Markdown("##No Data")
+            return pn.pane.Markdown("## No Data")
         else:
-            return pn.indicators.Number(value=round(self.expenses['Amount'].sum(),2),
-                                        format='${value}',font_size='55px')
+            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h2>")
+        
+    @pn.depends('expenses')
+    def get_transactions(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            mdf = self.month_df[["Date","Account_Type","category","item","Memo/Description","Amount"]]
+            mdf.columns = ["Date","Type","Category","Item","Memo","Amount"]
+
+            return pn.widgets.Tabulator(mdf, height=700, show_index=False,
+                                        theme='bootstrap', layout='fit_columns',
+                                        sizing_mode='stretch_width', header_filters=True)
         
     @pn.depends('income')
     def get_income(self):
         if self.income is None or len(self.income)==0:
-            return pn.pane.Markdown("##No Data")
+            return pn.pane.HTML("<h1> No Data </h1>")
         else:
-            return pn.indicators.Number(value=round(self.income['Amount'].sum(),2),
-                                        format='${value}',font_size='55px')
+            return pn.pane.HTML(f"<h1> ${round(self.income['Amount'].sum(),2)} </h1>")
         
     @pn.depends('income')
     def get_net_profit(self):
         if self.month_df is None or len(self.month_df)==0:
-            return pn.pane.Markdown("##No Data")
+            return pn.pane.HTML("<h1> No Data </h1>")
         else:
             net = self.income['Amount'].sum() - self.expenses['Amount'].sum()
-            return pn.indicators.Number(value=round(net,2), colors = [(0,'red'),(100000,'green')],
-                                        format='${value}',font_size='55px')
-
+            if net>=0:
+                return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
+            else:
+                return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
     dbname = "quickbooks.db"
     dbpath = os.path.join(SRC_DIR,"db",dbname)
-    print(f"Getting QuickBooks data from database: {dbpath}")
     qbdf = get_db_data(dbpath)
     qbdf['Date'] = pd.to_datetime(qbdf['Date'])
 
     budget_csv = os.path.join(SRC_DIR,'config','qb_to_budget_map.csv')
-    print(f"Getting budget data from file: {budget_csv}")
     budgetdf = get_budget_data(budget_csv)
 
     check_fields(qbdf, budgetdf)
@@ -188,6 +199,7 @@ def main():
     template.add_panel('net_profit', dashboard.get_net_profit)
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
+    template.add_panel('transactions',dashboard.get_transactions)
     template.servable()
 
 
