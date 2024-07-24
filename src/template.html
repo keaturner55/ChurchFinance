@@ -3,60 +3,100 @@
 <!-- Addition to head -->
 {% block postamble %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+    /* Basic CSS for navigation bar */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+    
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+</style>
 {% endblock %}
 
 <!-- Addition to body -->
 {% block contents %}
 <div class="container-fluid">
-  <h1>New Beginnings Finance Report</h1>
-  <div class="row">
-     <div class="col-md-4">
-       {{ embed(roots.parameters) }}
-     </div>
-  </div>
-  <br>
-  <div class="row">
-      <div class="col-md-4 col-xs-6">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title">Total Expenses</h5>
-                  <h5 class="card-text">{{ embed(roots.total_expenses) }}</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-xs-6">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title">Total Income</h5>
-                  <p class="card-text">{{ embed(roots.total_income) }}</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-xs-6">
-          <div class="card">
-              <div class="card-body">
-                  <h5 class="card-title">Net Profit</h5>
-                  <p class="card-text">{{ embed(roots.net_profit) }}</p>
-              </div>
-          </div>
-      </div>
-  </div>
-  <br>
-  <div class="row">
-      <div class="col-md-6">
-          <div class="card">
-              <div class="card-body">
-                {{ embed(roots.barplot) }}
-              </div>
-          </div>
-      </div>
-      <div class="col-md-6">
-          <div class="card">
-              <div class="card-body">
-                {{ embed(roots.table) }}
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar">
+                        <a href="#home">Home</a>
+                        <a href="#news">News</a>
+                        <a href="#contact">Contact</a>
+                        <a href="#about">About</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Date Selection</h5>
+                            {{ embed(roots.parameters) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Expenses</h5>
+                            {{ embed(roots.total_expenses) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Income</h5>
+                            {{ embed(roots.total_income) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Net Profit</h5>
+                            <center>{{ embed(roots.net_profit) }}</center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ embed(roots.barplot) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ embed(roots.table) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 </div>
 {% endblock %}

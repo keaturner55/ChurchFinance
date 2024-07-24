@@ -144,14 +144,16 @@ class FinanceDashboard(param.Parameterized):
         if self.expenses is None or len(self.expenses)==0:
             return pn.pane.Markdown("##No Data")
         else:
-            return pn.indicators.Number(value=round(self.expenses['Amount'].sum(),2), format='${value}')
+            return pn.indicators.Number(value=round(self.expenses['Amount'].sum(),2),
+                                        format='${value}',font_size='55px')
         
     @pn.depends('income')
     def get_income(self):
         if self.income is None or len(self.income)==0:
             return pn.pane.Markdown("##No Data")
         else:
-            return pn.indicators.Number(value=round(self.income['Amount'].sum(),2), format='${value}')
+            return pn.indicators.Number(value=round(self.income['Amount'].sum(),2),
+                                        format='${value}',font_size='55px')
         
     @pn.depends('income')
     def get_net_profit(self):
@@ -159,7 +161,8 @@ class FinanceDashboard(param.Parameterized):
             return pn.pane.Markdown("##No Data")
         else:
             net = self.income['Amount'].sum() - self.expenses['Amount'].sum()
-            return pn.indicators.Number(value=round(net,2), colors = [(0,'red'),(100000,'green')],format='${value}')
+            return pn.indicators.Number(value=round(net,2), colors = [(0,'red'),(100000,'green')],
+                                        format='${value}',font_size='55px')
 
 
 def main():
