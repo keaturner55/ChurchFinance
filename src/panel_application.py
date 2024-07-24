@@ -99,7 +99,7 @@ class FinanceDashboard(param.Parameterized):
         self.qb_df = qb_df
         self.budget_df = budget_df
         self.parameter_pane = pn.Param(self,parameters = ['year', 'month'],
-                                       default_layout=pn.Row, show_name=False)
+                                       default_layout=pn.Column, show_name=False)
         self.month=1
         
 
