@@ -30,6 +30,30 @@ def get_budget_data(budget_csv):
     
     return budgetdf
 
+@pn.cache
+def calc_ytd_totals(qbdf, year):
+    expenses = qbdf.loc[qbdf['Account_Type']=="Expenses"]
+    income = qbdf.loc[qbdf['Account_Type']=="Income"]
+    start_time = parser.parse(f'{year}-01-01')
+    end_time = parser.parse(f'{year+1}-01-01')
+    expense_max_date = expenses['Date'].max()
+    income_max_date = income['Date'].max()
+
+    # remove large expenses and special accounts from the avg calculation
+    period_expenses = expenses.loc[(expenses['Date']>=start_time) & (expenses['Amount']<4000)]
+    period_income = income.loc[(income['Date']>=start_time) & (income['item']!="Worship Contribution") & (income['item']!='Olive Tree (Tenant Lease)')]
+
+    expense_days = (expense_max_date - start_time).days
+    income_days = (income_max_date - start_time).days
+    expense_per_day = period_expenses['Amount'].sum() / expense_days
+    income_per_day = period_income['Amount'].sum() / income_days
+    remaining_expenses = expense_per_day * (end_time - expense_max_date).days
+    remaining_income = income_per_day * (end_time - income_max_date).days
+    projected_expense_total = remaining_expenses + expenses['Amount'].sum()
+    projected_income_total = remaining_income + income['Amount'].sum()
+
+    return (expenses, income, projected_expense_total, projected_income_total)
+
 def check_fields(qbdf,budgetdf):
     # preprocessing/data manipulation
     budget_items = budgetdf['QB_Item'].unique()
@@ -99,7 +123,7 @@ class FinanceDashboard(param.Parameterized):
         self.qb_df = qb_df
         self.budget_df = budget_df
         self.parameter_pane = pn.Param(self,parameters = ['year', 'month'],
-                                       default_layout=pn.Column, show_name=False)
+                                       default_layout=pn.Row, show_name=False)
         self.month=1
         
 
@@ -113,7 +137,7 @@ class FinanceDashboard(param.Parameterized):
     @pn.depends('subcategory_totals')
     def gen_bar_plot(self):
         if self.subcategory_totals is None or len(self.subcategory_totals)==0:
-            return pn.pane.Markdown("No Data")
+            return pn.pane.HTML(f"<h1> No Data </h1>")
         month_name = calendar.month_name[self.month]
         tempdf = self.subcategory_totals.copy()
         tempdf["RG"] = np.where((tempdf.Amount > tempdf.Budget), 'red', 'green')
@@ -124,17 +148,18 @@ class FinanceDashboard(param.Parameterized):
         p.xaxis.major_label_text_font_size = "12pt"
         p.vbar(x = 'Subcategory', top='Amount', source=source, width=.5, legend_label="Amount", color = 'RG')
         p.dash(x='Subcategory',y='Budget', source=source, legend_label="Budget", color='black', size=23, line_width=3)
-        return pn.pane.Bokeh(p, height=500, sizing_mode='stretch_width')
+        return pn.pane.Bokeh(p, sizing_mode='stretch_both')
     
     @pn.depends('expenses')
     def gen_table(self):
         if self.expenses is None or len(self.expenses)==0:
-            return pn.pane.Markdown("## No Data")
+            return pn.pane.HTML(f"<h1> No Data </h1>")
         item_totals = self.expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
         item_totals.columns = ['item','Amount','Transactions']
         item_totals["Transactions"] = item_totals["Transactions"].apply(int)
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
         report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
+
         expense_table = pn.widgets.Tabulator(report_totals, height=500, page_size=10,
                                              pagination='remote',
                                             show_index=False, theme='bootstrap',
@@ -144,9 +169,9 @@ class FinanceDashboard(param.Parameterized):
     @pn.depends('expenses')
     def get_expenses(self):
         if self.expenses is None or len(self.expenses)==0:
-            return pn.pane.Markdown("## No Data")
+            return pn.pane.HTML("<h1> No Data </h1>")
         else:
-            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h2>")
+            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h1>")
         
     @pn.depends('expenses')
     def get_transactions(self):
@@ -177,6 +202,20 @@ class FinanceDashboard(param.Parameterized):
                 return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
             else:
                 return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
+            
+    def get_ytd_report(self, expenses, income, projected_expense_total, projected_income_total):
+        expense_line = expenses.sort_values('Date')[['Amount','Date']]
+        expense_line['Amount'] = expense_line['Amount'].cumsum()
+        income_line = income.sort_values('Date')[['Amount','Date']]
+        income_line['Amount'] = income_line['Amount'].cumsum()
+        ax.plot(income_line['Date'], income_line['Amount'], color='blue', label="Income")
+        ax.plot(expense_line['Date'],expense_line['Amount'], color='black', label="Expenses")
+        projected_income_dates = [list(income_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
+        projected_income_line = [list(income_line.tail(1)['Amount'])[0], projected_income_total]
+        projected_expense_dates = [list(expense_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
+        projected_expense_line = [list(expense_line.tail(1)['Amount'])[0], projected_expense_total]
+        ax.plot(projected_income_dates,projected_income_line,linestyle='--',color='blue', label="Projected Income")
+        ax.plot(projected_expense_dates,projected_expense_line,linestyle='--',color='black', label="Projected Expenses")
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
