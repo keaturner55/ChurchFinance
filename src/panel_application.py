@@ -226,7 +226,7 @@ class FinanceDashboard(param.Parameterized):
         expense_line['Amount'] = expense_line['Amount'].cumsum()
         income_line = self.ytd_income.sort_values('Date')[['Amount','Date']]
         income_line['Amount'] = income_line['Amount'].cumsum()
-        p = figure(x_axis_type="datetime")
+        p = figure(x_axis_type="datetime", width=800)
 
         thickness = 3
         p.line(income_line['Date'], income_line['Amount'], color = 'blue', legend_label='Income',line_width=thickness)
