@@ -32,6 +32,8 @@ def get_budget_data(budget_csv):
 
 @pn.cache
 def calc_ytd_totals(qbdf, year):
+
+    # separate income and expenses and time bin for the year
     expenses = qbdf.loc[qbdf['Account_Type']=="Expenses"]
     income = qbdf.loc[qbdf['Account_Type']=="Income"]
     start_time = parser.parse(f'{year}-01-01')
@@ -43,6 +45,7 @@ def calc_ytd_totals(qbdf, year):
     period_expenses = expenses.loc[(expenses['Date']>=start_time) & (expenses['Amount']<4000)]
     period_income = income.loc[(income['Date']>=start_time) & (income['item']!="Worship Contribution") & (income['item']!='Olive Tree (Tenant Lease)')]
 
+    # project out based on average daily income/expense
     expense_days = (expense_max_date - start_time).days
     income_days = (income_max_date - start_time).days
     expense_per_day = period_expenses['Amount'].sum() / expense_days
@@ -116,8 +119,14 @@ class FinanceDashboard(param.Parameterized):
     subcategory_totals = param.DataFrame()
     expenses = param.DataFrame()
     income = param.DataFrame()
+    ytd_expenses = param.DataFrame()
+    ytd_income = param.DataFrame()
+    
+    ytd_projected_expenses = param.Number()
+    ytd_projected_income = param.Number()
+    
 
-    def __init__(self, qb_df = None, budget_df = None, **params):
+    def __init__(self, qb_df = None, budget_df = None, ytd_totals=None, **params):
         super().__init__(**params)
 
         self.qb_df = qb_df
@@ -125,6 +134,13 @@ class FinanceDashboard(param.Parameterized):
         self.parameter_pane = pn.Param(self,parameters = ['year', 'month'],
                                        default_layout=pn.Row, show_name=False)
         self.month=1
+
+        (self.ytd_expenses,
+         self.ytd_income,
+         self.ytd_projected_expenses,
+         self.ytd_projected_income) = ytd_totals
+
+
         
 
     @pn.depends("year", "month", watch=True)
@@ -202,20 +218,30 @@ class FinanceDashboard(param.Parameterized):
                 return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
             else:
                 return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
-            
-    def get_ytd_report(self, expenses, income, projected_expense_total, projected_income_total):
-        expense_line = expenses.sort_values('Date')[['Amount','Date']]
+
+    @pn.depends('income')        
+    def get_ytd_report(self):
+        
+        expense_line = self.ytd_expenses.sort_values('Date')[['Amount','Date']]
         expense_line['Amount'] = expense_line['Amount'].cumsum()
-        income_line = income.sort_values('Date')[['Amount','Date']]
+        income_line = self.ytd_income.sort_values('Date')[['Amount','Date']]
         income_line['Amount'] = income_line['Amount'].cumsum()
-        ax.plot(income_line['Date'], income_line['Amount'], color='blue', label="Income")
-        ax.plot(expense_line['Date'],expense_line['Amount'], color='black', label="Expenses")
+        p = figure(x_axis_type="datetime")
+
+        thickness = 3
+        p.line(income_line['Date'], income_line['Amount'], color = 'blue', legend_label='Income',line_width=thickness)
+        p.line(expense_line['Date'],expense_line['Amount'], color='black', legend_label="Expenses",line_width=thickness)
         projected_income_dates = [list(income_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
-        projected_income_line = [list(income_line.tail(1)['Amount'])[0], projected_income_total]
+        projected_income_line = [list(income_line.tail(1)['Amount'])[0], self.ytd_projected_income]
         projected_expense_dates = [list(expense_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
-        projected_expense_line = [list(expense_line.tail(1)['Amount'])[0], projected_expense_total]
-        ax.plot(projected_income_dates,projected_income_line,linestyle='--',color='blue', label="Projected Income")
-        ax.plot(projected_expense_dates,projected_expense_line,linestyle='--',color='black', label="Projected Expenses")
+        projected_expense_line = [list(expense_line.tail(1)['Amount'])[0], self.ytd_projected_expenses]
+        p.line(projected_income_dates,projected_income_line,line_dash='dashed',color='blue', legend_label="Projected Income",line_width=thickness)
+        p.line(projected_expense_dates,projected_expense_line,line_dash='dashed',color='black', legend_label="Projected Expenses",line_width=thickness)
+        p.legend.location = 'top_left'
+        p.xaxis.major_label_text_font_size = "12pt"
+
+
+        return pn.pane.Bokeh(p, sizing_mode='stretch_width')
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
@@ -228,10 +254,13 @@ def main():
     budgetdf = get_budget_data(budget_csv)
 
     check_fields(qbdf, budgetdf)
+    ytd_totals = calc_ytd_totals(qbdf,2024)
+
     env = Environment(loader=FileSystemLoader('.'))
     template = pn.Template(env.get_template('template.html'))
 
-    dashboard = FinanceDashboard(qbdf, budgetdf)
+    dashboard = FinanceDashboard(qbdf, budgetdf, ytd_totals)
+
     template.add_panel('parameters',dashboard.parameter_pane)
     template.add_panel('total_expenses',dashboard.get_expenses)
     template.add_panel('total_income',dashboard.get_income)
@@ -239,6 +268,7 @@ def main():
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
     template.add_panel('transactions',dashboard.get_transactions)
+    template.add_panel('YTD', dashboard.get_ytd_report)
     template.servable()
 
 
