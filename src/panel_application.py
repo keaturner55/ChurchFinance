@@ -8,7 +8,7 @@ from pathlib import Path
 import calendar
 from dateutil import parser
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource, Label
 from jinja2 import Environment, FileSystemLoader
 import math
 import numpy as np
@@ -182,12 +182,6 @@ class FinanceDashboard(param.Parameterized):
                                             layout='fit_columns',sizing_mode='stretch_width')
         return expense_table
 
-    @pn.depends('expenses')
-    def get_expenses(self):
-        if self.expenses is None or len(self.expenses)==0:
-            return pn.pane.HTML("<h1> No Data </h1>")
-        else:
-            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h1>")
         
     @pn.depends('expenses')
     def get_transactions(self):
@@ -200,6 +194,12 @@ class FinanceDashboard(param.Parameterized):
             return pn.widgets.Tabulator(mdf, height=700, show_index=False,
                                         theme='bootstrap', layout='fit_columns',
                                         sizing_mode='stretch_width', header_filters=True)
+    @pn.depends('expenses')
+    def get_expenses(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h1>")
         
     @pn.depends('income')
     def get_income(self):
@@ -219,14 +219,14 @@ class FinanceDashboard(param.Parameterized):
             else:
                 return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
 
-    @pn.depends('income')        
+    @pn.depends('ytd_expenses')        
     def get_ytd_report(self):
         
         expense_line = self.ytd_expenses.sort_values('Date')[['Amount','Date']]
         expense_line['Amount'] = expense_line['Amount'].cumsum()
         income_line = self.ytd_income.sort_values('Date')[['Amount','Date']]
         income_line['Amount'] = income_line['Amount'].cumsum()
-        p = figure(x_axis_type="datetime", width=800)
+        p = figure(x_axis_type="datetime", height=500)
 
         thickness = 3
         p.line(income_line['Date'], income_line['Amount'], color = 'blue', legend_label='Income',line_width=thickness)
@@ -237,11 +237,62 @@ class FinanceDashboard(param.Parameterized):
         projected_expense_line = [list(expense_line.tail(1)['Amount'])[0], self.ytd_projected_expenses]
         p.line(projected_income_dates,projected_income_line,line_dash='dashed',color='blue', legend_label="Projected Income",line_width=thickness)
         p.line(projected_expense_dates,projected_expense_line,line_dash='dashed',color='black', legend_label="Projected Expenses",line_width=thickness)
+        proj_net_profit = self.ytd_projected_income-self.ytd_projected_expenses
+        bfil = 'green' if proj_net_profit>0 else 'red'
+        projection_label = Label(x=280, y=70, x_units='screen', y_units='screen',
+                             text=(f"Projected Income: ${round(self.ytd_projected_income,0)}\n"
+                                    f"Projected Expenses: ${round(self.ytd_projected_expenses,0)}\n"
+                                    f"Projected Net Profit: ${round(proj_net_profit,0)}"),
+                             border_line_color='black', border_line_alpha=1.0,
+                 background_fill_color=bfil, background_fill_alpha=.5)
+        p.add_layout(projection_label)
         p.legend.location = 'top_left'
         p.xaxis.major_label_text_font_size = "12pt"
 
-
         return pn.pane.Bokeh(p, sizing_mode='stretch_width')
+
+    @pn.depends('expenses')
+    def gen_ytd_table(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML(f"<h1> No Data </h1>")
+        item_totals = self.ytd_expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
+        item_totals.columns = ['item','Amount','Transactions']
+        item_totals["Transactions"] = item_totals["Transactions"].apply(int)
+        year_budget = self.budget_df.copy()
+        year_budget['Budget']=year_budget['Budget']*12
+        all_totals = pd.merge(year_budget,item_totals, left_on='QB_Item', right_on="item", how = 'left')
+        report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
+
+        expense_table = pn.widgets.Tabulator(report_totals, height=500, page_size=10,
+                                             pagination='remote',
+                                            show_index=False, theme='bootstrap',
+                                            layout='fit_columns',sizing_mode='stretch_width')
+        return expense_table
+    
+    @pn.depends('ytd_expenses')
+    def get_ytd_expenses(self):
+        if self.ytd_expenses is None or len(self.ytd_expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.ytd_expenses['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('ytd_expenses')
+    def get_ytd_income(self):
+        if self.ytd_income is None or len(self.ytd_income)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.ytd_income['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('ytd_expenses')
+    def get_ytd_net_profit(self):
+        if self.ytd_income is None or len(self.ytd_income)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            net = self.ytd_income['Amount'].sum() - self.ytd_expenses['Amount'].sum()
+            if net>=0:
+                return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
+            else:
+                return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
@@ -268,7 +319,13 @@ def main():
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
     template.add_panel('transactions',dashboard.get_transactions)
-    template.add_panel('YTD', dashboard.get_ytd_report)
+    template.add_panel('ytd_plot', dashboard.get_ytd_report)
+    template.add_panel('ytd_expenses', dashboard.get_ytd_expenses)
+    template.add_panel('ytd_table', dashboard.gen_ytd_table)
+    template.add_panel('ytd_income', dashboard.get_ytd_income)
+    template.add_panel('ytd_net_profit', dashboard.get_ytd_net_profit)
+
+
     template.servable()
 
 
