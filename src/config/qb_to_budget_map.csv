@@ -2,39 +2,39 @@ Category,Subcategory,Item,QB_Item,Budget
 Salaries,Salaries,Lead Pastor,Lead Pastor,1300
 Salaries,Salaries,Associate Pastor,Associate Pastor,0
 Salaries,Salaries,Childrens,Children's Church Coordinator,0
-Facilities,Building/Office,Office Supplies,Office Supplies,42
-Facilities,Building/Office,Equipment,Equipment,42
+Facilities,Building/Office,Office Supplies,Office Supplies,41.67
+Facilities,Building/Office,Equipment,Equipment,41.67
 Facilities,Building/Office,Communications,Communications,81.25
-Facilities,Building/Office,Update/Renovations,Updates/Renovations,83
-Facilities,Building/Office,Building Repair/Maintenance,Repair and Maintenance,1000
+Facilities,Building/Office,Update/Renovations,Updates/Renovations,250
+Facilities,Building/Office,Building Repair/Maintenance,Repair and Maintenance,500
 Facilities,Building/Office,Decor,Decor,25
-Facilities,Building/Office,Trash,Trash,23
+Facilities,Building/Office,Trash,Trash,23.33
 Facilities,Building/Office,ENT Deposit Box,ENT Deposit,1.25
 Facilities,Building/Office,Church Insurance,Church Insurance,377.5
 Facilities,Building/Office,Refunded Transactions,Refunded Transactions,0
 Facilities,Professional Fees,Utilities,Utilities,462.5
 Facilities,Professional Fees,City Watershed Fees,City Watershed Fees,21.07
-Facilities,Professional Fees,Cleaning Service,Cleaning Service,217
+Facilities,Professional Fees,Cleaning Service,Cleaning Service,216.67
 Facilities,Professional Fees,Lawn/Snow Service,Lawn/Snow,125
-Facilities,Professional Fees,Incorp Fees,Incorporation Fees,0.84
+Facilities,Professional Fees,Incorp Fees,Incorporation Fees,0.83
 Facilities,Professional Fees,Property Tax Exempt Fee,Property Tax Exempt Fee,12.5
-Facilities,Hospitality,Kitchen/Cleaning/Paper Goods,Kitchen/Cleaning/Paper Supplies,58
-Facilities,Hospitality,"Food for Events, Sunday Morning",Food for Events/Sunday Morning,42
-Facilities,Software & Subscriptions,Software & Subscriptions,Software and Subscriptions,156
-Ministry,Individual Ministries,Pastoral Expense,Pastoral Expenses,83
+Facilities,Hospitality,Kitchen/Cleaning/Paper Goods,Kitchen/Cleaning/Paper Supplies,58.33
+Facilities,Hospitality,"Food for Events, Sunday Morning",Food for Events/Sunday Morning,66.67
+Facilities,Software & Subscriptions,Software & Subscriptions,Software and Subscriptions,156.33
+Ministry,Individual Ministries,Pastoral Expense,Pastoral Expenses,83.33
 Ministry,Individual Ministries,Ministry Network,Ministry Network,165
-Ministry,Individual Ministries,Worship,Worship Expenses,83
+Ministry,Individual Ministries,Worship,Worship Expenses,62.5
 Ministry,Individual Ministries,Discipleship,Discipleship,12.5
-Ministry,Individual Ministries,Childrens,Children's,21
-Ministry,Individual Ministries,Student Ministry,Student Ministry,42
-Ministry,Individual Ministries,Communion,Communion,25
-Ministry,Individual Ministries,Coffee/Meals,Coffee/Meals,83
-Ministry,Individual Ministries,Honorarium/Blessing,Honorarium/Blessing,250
-Ministry,Marketing/Promotional,Marketing/Promotional,Marketing/Promotional,42
-Ministry,Resources,Right Now Media,Right Now Media,60
-Ministry,Outreach/Events,Church Outreach,Church Outreach,42
-Ministry,Conferences/Retreats,Conferences/Retreats,Conferences/Retreats,83
-Giving,Charitable Contributions,Benevolence/Needy Family,Benevolence,129
-Giving,Charitable Contributions,Life Network,Life Network,129
-Giving,Charitable Contributions,Joel Frees,Joel Frees,129
-Giving,Charitable Contributions,Crossfire,Crossfire,129
+Ministry,Individual Ministries,Childrens,Children's,20.83
+Ministry,Individual Ministries,Student Ministry,Student Ministry,25
+Ministry,Individual Ministries,Communion,Communion,0
+Ministry,Individual Ministries,Coffee/Meals,Coffee/Meals,41.67
+Ministry,Individual Ministries,Honorarium/Blessing,Honorarium/Blessing,166.67
+Ministry,Marketing/Promotional,Marketing/Promotional,Marketing/Promotional,41.67
+Ministry,Resources,Right Now Media,Right Now Media,0
+Ministry,Outreach/Events,Church Outreach,Church Outreach,41.67
+Ministry,Conferences/Retreats,Conferences/Retreats,Conferences/Retreats,83.33
+Giving,Charitable Contributions,Benevolence/Needy Family,Benevolence,125
+Giving,Charitable Contributions,Life Network,Life Network,125
+Giving,Charitable Contributions,Joel Frees,Joel Frees,125
+Giving,Charitable Contributions,Crossfire,Crossfire,125

@@ -239,12 +239,12 @@ class FinanceDashboard(param.Parameterized):
         p.line(projected_expense_dates,projected_expense_line,line_dash='dashed',color='black', legend_label="Projected Expenses",line_width=thickness)
         proj_net_profit = self.ytd_projected_income-self.ytd_projected_expenses
         bfil = 'green' if proj_net_profit>0 else 'red'
-        projection_label = Label(x=280, y=70, x_units='screen', y_units='screen',
+        projection_label = Label(x=200, y=50, x_units='screen', y_units='screen',
                              text=(f"Projected Income: ${round(self.ytd_projected_income,0)}\n"
                                     f"Projected Expenses: ${round(self.ytd_projected_expenses,0)}\n"
                                     f"Projected Net Profit: ${round(proj_net_profit,0)}"),
-                             border_line_color='black', border_line_alpha=1.0,
-                 background_fill_color=bfil, background_fill_alpha=.5)
+                             border_line_color='black', border_line_alpha=1.0,text_font_size = "18pt",
+                            background_fill_color=bfil, background_fill_alpha=.5)
         p.add_layout(projection_label)
         p.legend.location = 'top_left'
         p.xaxis.major_label_text_font_size = "12pt"
