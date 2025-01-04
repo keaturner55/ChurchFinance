@@ -102,7 +102,7 @@ month_total_income = dbc.Card([dbc.CardHeader(html.H4("Total Income")),dbc.CardB
 month_net_profit = dbc.Card([dbc.CardHeader(html.H4("Net Profit")),dbc.CardBody(id='net-profit', className='text-center')])
 
 sub_category_plot = dcc.Graph(id='subcategory-bar-plot')
-tb_cols = ['Date', 'Account_Type', 'category', 'item', 'Memo/Description', 'Amount']
+tb_cols = ['Item', 'Transactions','Budget', 'Amount']
 transaction_table = dag.AgGrid(id='transactions-table',
                                 columnDefs = [{'field':i} for i in tb_cols],
                                 defaultColDef={"flex": 1, "minWidth": 120, "sortable": True, "resizable": True, "filter": True},
@@ -123,7 +123,8 @@ app.layout = dbc.Container([
                     dbc.Col(month_total_income, className="col-md-4"),
                     dbc.Col(month_net_profit,className="col-md-4")]),
                 dbc.Row([
-                    dbc.Tabs([dbc.Tab(sub_category_plot,label='Chart'),dbc.Tab(transaction_table,label='Tables')]) 
+                    dbc.Col(sub_category_plot,className='col-md-6'),
+                    dbc.Col(transaction_table,className='col-md-6') 
                 ])
             ])
         ])
@@ -170,12 +171,18 @@ def update_dashboard(year, month):
     bar_fig = go.Figure(data=[go.Bar(x=subcategory_totals['Subcategory'],
                                      y=subcategory_totals['Amount'],
                                      marker_color=subcategory_totals['RG'])])
-    #bar_fig = px.bar(subcategory_totals, x='Subcategory', y='Amount', marker_color=subcategory_totals['RG'])
-    #bar_fig.add_traces(list(px.scatter(subcategory_totals, x='Subcategory',y='Budget').select_traces()))#, symbol_sequence = ['line-ew']))
-    bar_fig.update_layout(xaxis_tickangle=-45)
+    bar_fig.add_trace(go.Scatter(x=subcategory_totals['Subcategory'],
+                                 y=subcategory_totals['Budget'],
+                                 mode='markers'))
+    bar_fig.update_layout(xaxis_tickangle=-45, showlegend=False,margin={'t':5,'l':5,'b':5,'r':5})
 
     # Transaction table
-    transactions_data = month_df[tb_cols].sort_values(by='Amount',ascending=False).to_dict('records')
+    item_totals = expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
+    item_totals.columns = ['item','Amount','Transactions']
+    item_totals["Transactions"] = item_totals["Transactions"].apply(int)
+    all_totals = pd.merge(budgetdf,item_totals, left_on='QB_Item', right_on="item", how = 'left')
+    transaction_table = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][tb_cols].sort_values(['Amount'],ascending=False).to_dict('records')
+
 
     # YTD line chart
     ytd_fig = px.line(x=ytd_expenses['Date'], y=ytd_expenses['Amount'].cumsum(), title="YTD Expenses vs Income")
@@ -196,7 +203,7 @@ def update_dashboard(year, month):
             total_income,
             net_profit,
             bar_fig,
-            transactions_data,
+            transaction_table,
             #ytd_fig,
             #ytd_table_data.to_dict('records'),
             #projected_text)
