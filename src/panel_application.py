@@ -1,16 +1,17 @@
 import panel as pn
 import param
 pn.extension('tabulator')
-import plotly.express as px
 import pandas as pd
 import sqlite3
 import os
 from pathlib import Path
 import calendar
 from dateutil import parser
-import hvplot.pandas
+from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource, Label
 from jinja2 import Environment, FileSystemLoader
-
+import math
+import numpy as np
 
 
 SRC_DIR = Path(__file__).parent
@@ -28,6 +29,33 @@ def get_budget_data(budget_csv):
     budgetdf = pd.read_csv(budget_csv)
     
     return budgetdf
+
+@pn.cache
+def calc_ytd_totals(qbdf, year):
+
+    # separate income and expenses and time bin for the year
+    expenses = qbdf.loc[qbdf['Account_Type']=="Expenses"]
+    income = qbdf.loc[qbdf['Account_Type']=="Income"]
+    start_time = parser.parse(f'{year}-01-01')
+    end_time = parser.parse(f'{year+1}-01-01')
+    expense_max_date = expenses['Date'].max()
+    income_max_date = income['Date'].max()
+
+    # remove large expenses and special accounts from the avg calculation
+    period_expenses = expenses.loc[(expenses['Date']>=start_time) & (expenses['Amount']<4000)]
+    period_income = income.loc[(income['Date']>=start_time) & (income['item']!="Worship Contribution") & (income['item']!='Olive Tree (Tenant Lease)')]
+
+    # project out based on average daily income/expense
+    expense_days = (expense_max_date - start_time).days
+    income_days = (income_max_date - start_time).days
+    expense_per_day = period_expenses['Amount'].sum() / expense_days
+    income_per_day = period_income['Amount'].sum() / income_days
+    remaining_expenses = expense_per_day * (end_time - expense_max_date).days
+    remaining_income = income_per_day * (end_time - income_max_date).days
+    projected_expense_total = remaining_expenses + expenses['Amount'].sum()
+    projected_income_total = remaining_income + income['Amount'].sum()
+
+    return (expenses, income, projected_expense_total, projected_income_total)
 
 def check_fields(qbdf,budgetdf):
     # preprocessing/data manipulation
@@ -90,8 +118,15 @@ class FinanceDashboard(param.Parameterized):
     budget_df = param.DataFrame()
     subcategory_totals = param.DataFrame()
     expenses = param.DataFrame()
+    income = param.DataFrame()
+    ytd_expenses = param.DataFrame()
+    ytd_income = param.DataFrame()
+    
+    ytd_projected_expenses = param.Number()
+    ytd_projected_income = param.Number()
+    
 
-    def __init__(self, qb_df = None, budget_df = None, **params):
+    def __init__(self, qb_df = None, budget_df = None, ytd_totals=None, **params):
         super().__init__(**params)
 
         self.qb_df = qb_df
@@ -99,63 +134,198 @@ class FinanceDashboard(param.Parameterized):
         self.parameter_pane = pn.Param(self,parameters = ['year', 'month'],
                                        default_layout=pn.Row, show_name=False)
         self.month=1
+
+        (self.ytd_expenses,
+         self.ytd_income,
+         self.ytd_projected_expenses,
+         self.ytd_projected_income) = ytd_totals
+
+
         
 
     @pn.depends("year", "month", watch=True)
     def generate_month_report(self):
-        print("fire... generate month reports")
-    
         self.month_df = get_month_data(self.year, self.month, self.qb_df)
         self.expenses = self.month_df.loc[self.month_df['Account_Type']=="Expenses"]
+        self.income = self.month_df.loc[self.month_df['Account_Type']=="Income"]
         self.subcategory_totals = merge_budget_expenses(self.budget_df, self.expenses)
     
     @pn.depends('subcategory_totals')
     def gen_bar_plot(self):
-        print("fire... gen bar plot")
         if self.subcategory_totals is None or len(self.subcategory_totals)==0:
-            return pn.pane.Markdown("No Data")
+            return pn.pane.HTML(f"<h1> No Data </h1>")
         month_name = calendar.month_name[self.month]
-        budget_bar = self.subcategory_totals.hvplot.bar(x='Subcategory',y=['Budget','Amount'],
-                                            ylabel="Expenses",
-                                            rot=60,
-                                            title = month_name,
-                                            legend="top_right").opts(multi_level=False,
-                                                                    cmap=[(44,160,44),(31,119,180)])
-        return pn.pane.HoloViews(budget_bar, height=500, sizing_mode='stretch_width')
+        tempdf = self.subcategory_totals.copy()
+        tempdf["RG"] = np.where((tempdf.Amount > tempdf.Budget), 'red', 'green')
+        source = ColumnDataSource(tempdf)
+        p = figure(x_range=tempdf['Subcategory'],title=month_name, height=500)
+        p.yaxis.axis_label = 'Amount'
+        p.xaxis.major_label_orientation=math.pi/4
+        p.xaxis.major_label_text_font_size = "12pt"
+        p.vbar(x = 'Subcategory', top='Amount', source=source, width=.5, legend_label="Amount", color = 'RG')
+        p.dash(x='Subcategory',y='Budget', source=source, legend_label="Budget", color='black', size=23, line_width=3)
+        return pn.pane.Bokeh(p, sizing_mode='stretch_both')
     
     @pn.depends('expenses')
     def gen_table(self):
         if self.expenses is None or len(self.expenses)==0:
-            return "No Data"
+            return pn.pane.HTML(f"<h1> No Data </h1>")
         item_totals = self.expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
         item_totals.columns = ['item','Amount','Transactions']
         item_totals["Transactions"] = item_totals["Transactions"].apply(int)
         all_totals = pd.merge(self.budget_df,item_totals, left_on='QB_Item', right_on="item", how = 'left')
         report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
-        expense_table = pn.widgets.Tabulator(report_totals, height=500,
-                                            show_index=False, theme='bootstrap', sizing_mode='stretch_width')
+
+        expense_table = pn.widgets.Tabulator(report_totals, height=500, page_size=10,
+                                             pagination='remote',
+                                            show_index=False, theme='bootstrap',
+                                            layout='fit_columns',sizing_mode='stretch_width')
         return expense_table
+
+        
+    @pn.depends('expenses')
+    def get_transactions(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            mdf = self.month_df[["Date","Account_Type","category","item","Memo/Description","Amount"]]
+            mdf.columns = ["Date","Type","Category","Item","Memo","Amount"]
+
+            return pn.widgets.Tabulator(mdf, height=700, show_index=False,
+                                        theme='bootstrap', layout='fit_columns',
+                                        sizing_mode='stretch_width', header_filters=True)
+    @pn.depends('expenses')
+    def get_expenses(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.expenses['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('income')
+    def get_income(self):
+        if self.income is None or len(self.income)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.income['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('income')
+    def get_net_profit(self):
+        if self.month_df is None or len(self.month_df)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            net = self.income['Amount'].sum() - self.expenses['Amount'].sum()
+            if net>=0:
+                return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
+            else:
+                return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
+
+    @pn.depends('ytd_expenses')        
+    def get_ytd_report(self):
+        
+        expense_line = self.ytd_expenses.sort_values('Date')[['Amount','Date']]
+        expense_line['Amount'] = expense_line['Amount'].cumsum()
+        income_line = self.ytd_income.sort_values('Date')[['Amount','Date']]
+        income_line['Amount'] = income_line['Amount'].cumsum()
+        p = figure(x_axis_type="datetime", height=500)
+
+        thickness = 3
+        p.line(income_line['Date'], income_line['Amount'], color = 'blue', legend_label='Income',line_width=thickness)
+        p.line(expense_line['Date'],expense_line['Amount'], color='black', legend_label="Expenses",line_width=thickness)
+        projected_income_dates = [list(income_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
+        projected_income_line = [list(income_line.tail(1)['Amount'])[0], self.ytd_projected_income]
+        projected_expense_dates = [list(expense_line.tail(1)['Date'])[0], parser.parse('2025-01-01')]
+        projected_expense_line = [list(expense_line.tail(1)['Amount'])[0], self.ytd_projected_expenses]
+        p.line(projected_income_dates,projected_income_line,line_dash='dashed',color='blue', legend_label="Projected Income",line_width=thickness)
+        p.line(projected_expense_dates,projected_expense_line,line_dash='dashed',color='black', legend_label="Projected Expenses",line_width=thickness)
+        proj_net_profit = self.ytd_projected_income-self.ytd_projected_expenses
+        bfil = 'green' if proj_net_profit>0 else 'red'
+        projection_label = Label(x=200, y=50, x_units='screen', y_units='screen',
+                             text=(f"Projected Income: ${round(self.ytd_projected_income,0)}\n"
+                                    f"Projected Expenses: ${round(self.ytd_projected_expenses,0)}\n"
+                                    f"Projected Net Profit: ${round(proj_net_profit,0)}"),
+                             border_line_color='black', border_line_alpha=1.0,text_font_size = "18pt",
+                            background_fill_color=bfil, background_fill_alpha=.5)
+        p.add_layout(projection_label)
+        p.legend.location = 'top_left'
+        p.xaxis.major_label_text_font_size = "12pt"
+
+        return pn.pane.Bokeh(p, sizing_mode='stretch_width')
+
+    @pn.depends('expenses')
+    def gen_ytd_table(self):
+        if self.expenses is None or len(self.expenses)==0:
+            return pn.pane.HTML(f"<h1> No Data </h1>")
+        item_totals = self.ytd_expenses.groupby('item').aggregate({"Amount":"sum","Date":'count'}).reset_index()
+        item_totals.columns = ['item','Amount','Transactions']
+        item_totals["Transactions"] = item_totals["Transactions"].apply(int)
+        year_budget = self.budget_df.copy()
+        year_budget['Budget']=year_budget['Budget']*12
+        all_totals = pd.merge(year_budget,item_totals, left_on='QB_Item', right_on="item", how = 'left')
+        report_totals = all_totals[~all_totals['item'].isin(['Lead Pastor','Associate Pastor'])][['Item', 'Transactions','Budget', 'Amount']].sort_values(['Amount'],ascending=False)
+
+        expense_table = pn.widgets.Tabulator(report_totals, height=500, page_size=10,
+                                             pagination='remote',
+                                            show_index=False, theme='bootstrap',
+                                            layout='fit_columns',sizing_mode='stretch_width')
+        return expense_table
+    
+    @pn.depends('ytd_expenses')
+    def get_ytd_expenses(self):
+        if self.ytd_expenses is None or len(self.ytd_expenses)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.ytd_expenses['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('ytd_expenses')
+    def get_ytd_income(self):
+        if self.ytd_income is None or len(self.ytd_income)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            return pn.pane.HTML(f"<h1> ${round(self.ytd_income['Amount'].sum(),2)} </h1>")
+        
+    @pn.depends('ytd_expenses')
+    def get_ytd_net_profit(self):
+        if self.ytd_income is None or len(self.ytd_income)==0:
+            return pn.pane.HTML("<h1> No Data </h1>")
+        else:
+            net = self.ytd_income['Amount'].sum() - self.ytd_expenses['Amount'].sum()
+            if net>=0:
+                return pn.pane.HTML(f"<h1 style=\"color: green\"> ${round(net,2)} </h1>")
+            else:
+                return pn.pane.HTML(f"<h1 style=\"color: red\"> ${round(net,2)} </h1>")
 
 def main():
     # QB data stored in the DB-comes from qb_etl.py
     dbname = "quickbooks.db"
     dbpath = os.path.join(SRC_DIR,"db",dbname)
-    print(f"Getting QuickBooks data from database: {dbpath}")
     qbdf = get_db_data(dbpath)
     qbdf['Date'] = pd.to_datetime(qbdf['Date'])
 
     budget_csv = os.path.join(SRC_DIR,'config','qb_to_budget_map.csv')
-    print(f"Getting budget data from file: {budget_csv}")
     budgetdf = get_budget_data(budget_csv)
 
     check_fields(qbdf, budgetdf)
+    ytd_totals = calc_ytd_totals(qbdf,2024)
+
     env = Environment(loader=FileSystemLoader('.'))
     template = pn.Template(env.get_template('template.html'))
 
-    dashboard = FinanceDashboard(qbdf, budgetdf)
+    dashboard = FinanceDashboard(qbdf, budgetdf, ytd_totals)
+
     template.add_panel('parameters',dashboard.parameter_pane)
+    template.add_panel('total_expenses',dashboard.get_expenses)
+    template.add_panel('total_income',dashboard.get_income)
+    template.add_panel('net_profit', dashboard.get_net_profit)
     template.add_panel('barplot',dashboard.gen_bar_plot)
     template.add_panel('table', dashboard.gen_table)
+    template.add_panel('transactions',dashboard.get_transactions)
+    template.add_panel('ytd_plot', dashboard.get_ytd_report)
+    template.add_panel('ytd_expenses', dashboard.get_ytd_expenses)
+    template.add_panel('ytd_table', dashboard.gen_ytd_table)
+    template.add_panel('ytd_income', dashboard.get_ytd_income)
+    template.add_panel('ytd_net_profit', dashboard.get_ytd_net_profit)
+
+
     template.servable()
 
 
