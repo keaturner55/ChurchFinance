@@ -65,7 +65,7 @@ qbdf['Date'] = pd.to_datetime(qbdf['Date'])
 budget_csv = os.path.join(SRC_DIR, 'config', 'qb_to_budget_map.csv')
 budgetdf = get_budget_data(budget_csv)
 
-ytd_expenses, ytd_income, ytd_projected_expenses, ytd_projected_income = calc_ytd_totals(qbdf, 2024)
+ytd_expenses, ytd_income, ytd_projected_expenses, ytd_projected_income = calc_ytd_totals(qbdf, 2025)
 
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
@@ -82,7 +82,7 @@ year_drop = html.Div(
     [
         dbc.Label("Year Selection"),
         dcc.Dropdown(id='year-dropdown',
-                             options=[{'label': str(year), 'value': year} for year in [2023, 2024]],
+                             options=[{'label': str(year), 'value': year} for year in [2024, 2025]],
                              value=2024,
                              style={'width': '100%'})
     ]
@@ -116,12 +116,13 @@ ytd_totals = dbc.Card([dbc.CardHeader("YTD Totals"),dbc.CardBody(id='projected-e
 app.layout = dbc.Container([
     header,
         dbc.Row([
-            dbc.Col([controls], width=3),
+            dbc.Col([controls], width=2),
             dbc.Col([
                 dbc.Row([
                     dbc.Col(month_total_expense,className="col-md-4"),
                     dbc.Col(month_total_income, className="col-md-4"),
                     dbc.Col(month_net_profit,className="col-md-4")]),
+                html.Br(),
                 dbc.Row([
                     dbc.Col(sub_category_plot,className='col-md-6'),
                     dbc.Col(transaction_table,className='col-md-6') 
@@ -173,7 +174,8 @@ def update_dashboard(year, month):
                                      marker_color=subcategory_totals['RG'])])
     bar_fig.add_trace(go.Scatter(x=subcategory_totals['Subcategory'],
                                  y=subcategory_totals['Budget'],
-                                 mode='markers'))
+                                 mode='markers',
+                                 marker=dict(symbol='diamond',color='black')))
     bar_fig.update_layout(xaxis_tickangle=-45, showlegend=False,margin={'t':5,'l':5,'b':5,'r':5})
 
     # Transaction table
