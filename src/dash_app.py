@@ -114,36 +114,72 @@ ytd_table = dag.AgGrid(id='ytd-table')
 ytd_totals = dbc.Card([dbc.CardHeader("YTD Totals"),dbc.CardBody(id='projected-expenses-income', children="Undefined")])
 
 
-month_view = dbc.Col([
-    dbc.Row([
-        dbc.Col(month_total_expense,className="col-md-4"),
-        dbc.Col(month_total_income, className="col-md-4"),
-        dbc.Col(month_net_profit,className="col-md-4")]),
-    html.Br(),
-    dbc.Row([
-        dbc.Col(sub_category_plot,className='col-md-6'),
-        dbc.Col(transaction_table,className='col-md-6') 
-    ])
-])
-
-ytd_view = dbc.Col([
-    ytd_line_chart,
-    ytd_table
-
-])
-
-qb_cols = ['Date','Transaction Type','Memo/Description','category']
-qb_table = dag.AgGrid(id='qb-table',
-    columnDefs = [{'field':i} for i in qb_cols],
-    defaultColDef={"flex": 1, "minWidth": 120, "sortable": True, "resizable": True, "filter": True},
-    dashGridOptions={"rowSelection":"multiple"},
-    rowData = qbdf[qb_cols].to_dict('records')
+month_view = html.Div(
+    dbc.Col([
+        dbc.Row([
+            dbc.Col(month_total_expense,className="col-md-4"),
+            dbc.Col(month_total_income, className="col-md-4"),
+            dbc.Col(month_net_profit,className="col-md-4")
+        ]),
+        html.Br(),
+        dbc.Row([
+            dbc.Col(sub_category_plot,className='col-md-6'),
+            dbc.Col(transaction_table,className='col-md-6') 
+        ])
+    ]),
+    style={
+        'padding-top': '20px',
+        'padding-bottom': '20px',
+        'padding-left': '10px',
+        'padding-right': '10px'
+    }
 )
 
+ytd_view = html.Div(
+    dbc.Col([
+    ytd_line_chart,
+    ytd_table
+    ]),
+    style={
+        'padding-top': '20px',
+        'padding-bottom': '20px',
+        'padding-left': '10px',
+        'padding-right': '10px'
+    }
+)
+
+qb_cols = ['Date','Amount','Transaction Type','Memo/Description','category']
+qb_table_df = qbdf[qb_cols]
+qb_table_df['Date'] = qb_table_df['Date'].dt.strftime('%m-%d-%Y')
+date_formatting = {"headerName" : "Date",
+                   "field": "Date",
+                "filter": "agDateColumnFilter",
+                "valueGetter": {"function": "d3.timeParse('%m-%d-%Y')(params.data.Date)"},
+                "valueFormatter": {"function":"params.data.Date"},
+                "filterParams": {
+                    "browserDatePicker": True,
+                    'buttons': ['reset', 'apply'],
+                }}
+qb_table = dag.AgGrid(id='qb-table',
+    columnDefs = [{'field':i, "filterParams": {'buttons': ['reset', 'apply']}} if i!= 'Date' else date_formatting for i in qb_cols],
+    defaultColDef={"flex": 1, "minWidth": 80, "sortable": True, "resizable": True, "filter": True},
+    dashGridOptions={"rowSelection":"multiple"},
+    rowData = qb_table_df.to_dict('records')
+)
+
+qb_table_view = html.Div(
+    qb_table,
+    style={
+        'padding-top': '20px',
+        'padding-bottom': '20px',
+        'padding-left': '10px',
+        'padding-right': '10px'
+    }
+)
 
 tab1 = dbc.Tab([month_view], label = "Monthly Summary")
 tab2 = dbc.Tab([ytd_view], label = "YTD Summary")
-tab3 = dbc.Tab([qb_table], label = "Transaction Table")
+tab3 = dbc.Tab([qb_table_view], label = "Transaction Table")
 
 tabs = dbc.Card(dbc.Tabs([tab1, tab2, tab3]))
 
@@ -155,6 +191,13 @@ app.layout = dbc.Container([
             dbc.Col([tabs])
         ])
 ], fluid=True, className="dbc dbc-ag-grid")
+
+@app.callback(
+    [Output('transactions-table', 'rowData')],
+    [Input('year-dropdown', 'value')]
+)
+def update_transactions_table(year):
+
 
 # Callbacks
 @app.callback(
